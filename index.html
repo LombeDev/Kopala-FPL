@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kopala FPL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --fpl-purple: #37003C;
@@ -11,6 +12,7 @@
             --fpl-pink: #D2005F;
             --fpl-grey: #EBEBEB;
             --text-dark: #242424;
+            --sidebar-width: 260px;
         }
         body {
             font-family: 'Arial', sans-serif;
@@ -19,216 +21,46 @@
             padding: 0;
             color: var(--text-dark);
         }
+
+        /* --- HEADER --- */
         header {
             background-color: var(--fpl-purple);
             color: white;
-            padding: 20px;
-            text-align: center;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
             border-bottom: 4px solid var(--fpl-green);
-        }
-        header h1 { margin: 0; font-weight: 800; letter-spacing: -1px; }
-        .nav-container {
-            background-color: #fff;
-            padding: 12px 0 12px 0;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        .nav-btn {
-            background-color: transparent;
-            border: 1px solid var(--fpl-purple);
-            color: var(--fpl-purple);
-            padding: 5px 10px;
-            margin: 0 2px;
-            border-radius: 16px;
+        
+        /* Hamburger Button */
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
             cursor: pointer;
-            font-weight: bold;
-            font-size: 0.75em;
-            transition: all 0.2s;
+            margin-right: 15px;
+            padding: 5px;
         }
-        .nav-btn:hover, .nav-btn.active {
-            background-color: var(--fpl-purple);
-            color: var(--fpl-green);
-            border-color: var(--fpl-purple);
-        }
-        /* Desktop layout nav */
-        .nav-btns {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-        /* Hide hamburger */
-        .hamburger { display: none; }
 
-        /* --- STICKY BOTTOM NAV FOR MOBILE --- */
-        @media (max-width: 700px) {
-            .nav-container {
-                display: none;
-            }
-            .mobile-bottom-nav {
-                display: flex;
-                position: fixed;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                z-index: 999;
-                background: #fff;
-                box-shadow: 0 -2px 20px rgba(0,0,0,0.09);
-                border-top: 1px solid #ddd;
-                justify-content: space-around;
-                padding: 6px 0 6px 0;
-            }
-            .mobile-bottom-nav .nav-btn {
-                flex:1 1 auto;
-                margin: 0 2px;
-                font-size: 1em;
-                padding: 10px 2px;
-                border-radius: 16px;
-                border: 1.1px solid var(--fpl-purple);
-            }
+        header h1 { 
+            margin: 0; 
+            font-weight: 800; 
+            font-size: 1.5rem;
+            letter-spacing: -1px; 
+            flex-grow: 1;
         }
-        @media (min-width: 701px) {
-            .mobile-bottom-nav {
-                display: none !important;
-            }
-        }
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        .fpl-table {
+
+        /* --- DESKTOP SIDEBAR (The "Hamburger" Menu) --- */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
-            margin: 0 auto;
-            font-size: 1em;
-        }
-        .fpl-table th, .fpl-table td {
-            padding: 12px 10px;
-            text-align: left;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .fpl-table th {
-            background-color: var(--fpl-purple);
-            color: var(--fpl-green);
-            font-weight: bold;
-        }
-        .fpl-table tr:last-child td {
-            border-bottom: none;
-        }
-        .loading {
-            text-align: center;
-            padding: 50px;
-            color: #666;
-        }
-        @media (max-width: 700px) {
-            .container {
-                padding: 0 5px;
-                margin-bottom: 70px;
-            }
-            #data-grid {
-                overflow-x: auto;
-                width: 100%;
-            }
-            .fpl-table {
-                width: 100%;
-                min-width: 600px;
-                font-size: 0.97em;
-            }
-            .fpl-table th, .fpl-table td {
-                padding: 10px 6px;
-                min-width: 90px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>KOPALA FPL</h1>
-    </header>
-
-    <div class="nav-container" id="nav-menu">
-        <div class="nav-btns" id="nav-btns"></div>
-    </div>
-
-    <div class="mobile-bottom-nav" id="mobile-bottom-nav"></div>
-    
-    <div class="container">
-        <h2 id="current-sheet-name" style="color: var(--fpl-purple);">Loading...</h2>
-        <div id="data-grid"></div>
-    </div>
-
-    <script>
-        // --- 1. CONFIGURATION AREA ---
-        const mySheets = [
-            { name: "Live Rank", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1209971248&single=true&output=csv" },
-            { name: "Members", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=2125414706&single=true&output=csv" },
-            { name: "Fixture Ticker", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1206177471&single=true&output=csv" },
-            { name: "Articles", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1939677819&single=true&output=csv" },
-            { name: "Price Change", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=534532114&single=true&output=csv" }
-        ];
-
-        const grid = document.getElementById('data-grid');
-        const navBtns = document.getElementById('nav-btns');
-        const sheetTitle = document.getElementById('current-sheet-name');
-        const mobileBottomNav = document.getElementById('mobile-bottom-nav');
-        let currentSheetIndex = 0;
-
-        function renderNavButtons(container) {
-            container.innerHTML = '';
-            mySheets.forEach((sheet, idx) => {
-                const btn = document.createElement('button');
-                btn.className = 'nav-btn' + (idx === currentSheetIndex ? ' active' : '');
-                btn.innerText = sheet.name;
-                btn.onclick = () => loadSheet(idx);
-                container.appendChild(btn);
-            });
-        }
-
-        function loadSheet(idx) {
-            currentSheetIndex = idx;
-            renderNavButtons(navBtns);
-            renderNavButtons(mobileBottomNav);
-
-            sheetTitle.innerText = mySheets[idx].name;
-            grid.innerHTML = '<div class="loading">loading...</div>';
-
-            fetch(mySheets[idx].url)
-                .then(response => response.text())
-                .then(data => {
-                    const rows = data.split('\n').map(r => r.trim()).filter(r => r.length > 0);
-                    const headers = rows[0].split(',');
-                    grid.innerHTML = '';
-                    const table = document.createElement('table');
-                    table.className = 'fpl-table';
-                    table.innerHTML = `
-                        <thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
-                        <tbody>
-                            ${rows.slice(1).map(row => {
-                                const cols = row.split(',');
-                                return `<tr>${cols.map((val,j) => `<td data-label="${headers[j]}">${val||'-'}</td>`).join('')}</tr>`;
-                            }).join('')}
-                        </tbody>
-                    `;
-                    grid.appendChild(table);
-                })
-                .catch(() => grid.innerHTML = '<div class="loading">Error loading data. Check links.</div>');
-        }
-
-        function initMenu() {
-            renderNavButtons(navBtns);
-            renderNavButtons(mobileBottomNav);
-            if(mySheets.length) loadSheet(0);
-        }
-
-        initMenu();
-    </script>
-</body>
-</html>
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1100
