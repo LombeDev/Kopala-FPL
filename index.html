@@ -48,134 +48,51 @@
             font-size: 0.75em;
             transition: all 0.2s;
         }
-        .nav-btn:hover {
-            background-color: #f3e5f5;
-        }
-        .nav-btn.active {
+        .nav-btn:hover, .nav-btn.active {
             background-color: var(--fpl-purple);
             color: var(--fpl-green);
             border-color: var(--fpl-purple);
         }
-        /* Hamburger icon styling */
-        .hamburger {
-            display: none;
-            width: 40px;
-            height: 40px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            outline: none;
-            position: absolute;
-            left: 16px;
-            top: 14px;
-            z-index: 101;
-        }
-        .hamburger span, .hamburger span:before, .hamburger span:after {
-            display: block;
-            position: absolute;
-            width: 28px;
-            height: 4px;
-            background: var(--fpl-purple);
-            border-radius: 2px;
-            transition: 0.3s all ease;
-        }
-        .hamburger span {
-            top: 50%;
-            left: 6px;
-            margin-top: -2px;
-        }
-        .hamburger span:before {
-            content:"";
-            top: -10px;
-            left: 0;
-        }
-        .hamburger span:after {
-            content:"";
-            top: 10px;
-            left: 0;
-        }
-        .hamburger.active span {
-            background: transparent;
-        }
-        .hamburger.active span:before {
-            top: 0;
-            transform: rotate(45deg);
-        }
-        .hamburger.active span:after {
-            top: 0;
-            transform: rotate(-45deg);
-        }
+        /* Desktop layout nav */
         .nav-btns {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 4px;
         }
-        /* Sticky mobile menu button styles */
-        .sticky-bottom-menu-btn {
-            display: none;
-            position: fixed;
-            bottom: 18px;
-            right: 18px;
-            z-index: 103;
-            background-color: var(--fpl-purple);
-            color: var(--fpl-green);
-            border: none;
-            border-radius: 30px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.18);
-            padding: 12px 24px;
-            font-size: 1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .sticky-bottom-menu-btn.active {
-            background-color: var(--fpl-green);
-            color: var(--fpl-purple);
-        }
-        /* Mobile menu popover */
-        .nav-btns.mobile-popover {
-            display: none;
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 102;
-            background: #fff;
-            flex-direction: column;
-            align-items: stretch;
-            gap: 0;
-            padding: 14px 8px 16px 8px;
-            border-radius: 14px 14px 0 0;
-            box-shadow: 0 -3px 20px rgba(0,0,0,0.17);
-        }
-        .nav-btns.mobile-popover.open {
-            display: flex;
-        }
-        .nav-btns.mobile-popover .nav-btn {
-            margin: 3px 0;
-            font-size: 1.1em;
-            padding: 12px 2px;
-        }
+        /* Hide hamburger */
+        .hamburger { display: none; }
+
+        /* --- STICKY BOTTOM NAV FOR MOBILE --- */
         @media (max-width: 700px) {
             .nav-container {
-                padding-top: 48px;
-                text-align: left;
-            }
-            .nav-btns {
                 display: none;
             }
-            .nav-btns.open {
+            .mobile-bottom-nav {
                 display: flex;
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 999;
+                background: #fff;
+                box-shadow: 0 -2px 20px rgba(0,0,0,0.09);
+                border-top: 1px solid #ddd;
+                justify-content: space-around;
+                padding: 6px 0 6px 0;
             }
-            .hamburger {
-                display: block;
+            .mobile-bottom-nav .nav-btn {
+                flex:1 1 auto;
+                margin: 0 2px;
+                font-size: 1em;
+                padding: 10px 2px;
+                border-radius: 16px;
+                border: 1.1px solid var(--fpl-purple);
             }
-            .sticky-bottom-menu-btn {
-                display: block;
-            }
-            .nav-btns.mobile-popover .nav-btn {
-                font-size: 1.1em;
+        }
+        @media (min-width: 701px) {
+            .mobile-bottom-nav {
+                display: none !important;
             }
         }
         .container {
@@ -183,7 +100,6 @@
             margin: 30px auto;
             padding: 0 20px;
         }
-        /* --- TABLE STYLES --- */
         .fpl-table {
             width: 100%;
             border-collapse: collapse;
@@ -194,8 +110,7 @@
             margin: 0 auto;
             font-size: 1em;
         }
-        .fpl-table th,
-        .fpl-table td {
+        .fpl-table th, .fpl-table td {
             padding: 12px 10px;
             text-align: left;
             border-bottom: 1px solid #f0f0f0;
@@ -208,7 +123,6 @@
         .fpl-table tr:last-child td {
             border-bottom: none;
         }
-
         .loading {
             text-align: center;
             padding: 50px;
@@ -217,6 +131,7 @@
         @media (max-width: 700px) {
             .container {
                 padding: 0 5px;
+                margin-bottom: 70px;
             }
             #data-grid {
                 overflow-x: auto;
@@ -231,30 +146,19 @@
                 padding: 10px 6px;
                 min-width: 90px;
             }
-            .fpl-table td:before {
-                content: none !important;
-            }
         }
     </style>
 </head>
 <body>
-
     <header>
         <h1>KOPALA FPL</h1>
     </header>
 
     <div class="nav-container" id="nav-menu">
-        <!-- Hamburger icon -->
-        <button class="hamburger" id="hamburger-btn" aria-label="Menu" aria-controls="nav-btns" aria-expanded="false">
-            <span></span>
-        </button>
         <div class="nav-btns" id="nav-btns"></div>
     </div>
 
-    <!-- Sticky mobile menu button (only visible on mobile) -->
-    <button class="sticky-bottom-menu-btn" id="mobile-menu-btn" aria-label="Open navigation menu" aria-controls="mobile-nav-btns" aria-expanded="false">Menu</button>
-    <!-- Popover menu for mobile -->
-    <div class="nav-btns mobile-popover" id="mobile-nav-btns"></div>
+    <div class="mobile-bottom-nav" id="mobile-bottom-nav"></div>
     
     <div class="container">
         <h2 id="current-sheet-name" style="color: var(--fpl-purple);">Loading...</h2>
@@ -264,154 +168,67 @@
     <script>
         // --- 1. CONFIGURATION AREA ---
         const mySheets = [
-            {
-                name: "Live Rank",
-                url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1209971248&single=true&output=csv" 
-            },
-            {
-                name: "Members",
-                url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=2125414706&single=true&output=csv" 
-            },
-            {
-                name: "Fixture Ticker",
-                url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1206177471&single=true&output=csv" 
-            },
-            {
-                name: "Articles",
-                url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1939677819&single=true&output=csv"
-            },
-            {
-                name: "Price Change",
-                url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=534532114&single=true&output=csv"
-            }
+            { name: "Live Rank", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1209971248&single=true&output=csv" },
+            { name: "Members", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=2125414706&single=true&output=csv" },
+            { name: "Fixture Ticker", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1206177471&single=true&output=csv" },
+            { name: "Articles", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1939677819&single=true&output=csv" },
+            { name: "Price Change", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=534532114&single=true&output=csv" }
         ];
 
-        // --- 2. APP LOGIC ---
         const grid = document.getElementById('data-grid');
         const navBtns = document.getElementById('nav-btns');
-        const hamburgerBtn = document.getElementById('hamburger-btn');
         const sheetTitle = document.getElementById('current-sheet-name');
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileNavBtns = document.getElementById('mobile-nav-btns');
-
+        const mobileBottomNav = document.getElementById('mobile-bottom-nav');
         let currentSheetIndex = 0;
 
-        function initMenu() {
-            navBtns.innerHTML = '';
-            mobileNavBtns.innerHTML = '';
-            mySheets.forEach((sheet, index) => {
-                // Desktop button
+        function renderNavButtons(container) {
+            container.innerHTML = '';
+            mySheets.forEach((sheet, idx) => {
                 const btn = document.createElement('button');
-                btn.className = 'nav-btn';
+                btn.className = 'nav-btn' + (idx === currentSheetIndex ? ' active' : '');
                 btn.innerText = sheet.name;
-                btn.onclick = () => {
-                    loadSheet(index);
-                };
-                navBtns.appendChild(btn);
-
-                // Mobile popover button (cloned logic)
-                const mbtn = document.createElement('button');
-                mbtn.className = 'nav-btn';
-                mbtn.innerText = sheet.name;
-                mbtn.onclick = () => {
-                    loadSheet(index);
-                    mobileNavBtns.classList.remove('open');
-                    mobileMenuBtn.classList.remove('active');
-                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
-                };
-                mobileNavBtns.appendChild(mbtn);
+                btn.onclick = () => loadSheet(idx);
+                container.appendChild(btn);
             });
-
-            // Hamburger menu toggle (desktop/top mobile)
-            hamburgerBtn.addEventListener('click', () => {
-                navBtns.classList.toggle('open');
-                hamburgerBtn.classList.toggle('active');
-                const expanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
-                hamburgerBtn.setAttribute('aria-expanded', String(!expanded));
-            });
-
-            // Sticky mobile menu button
-            mobileMenuBtn.addEventListener('click', () => {
-                const isOpen = mobileNavBtns.classList.toggle('open');
-                mobileMenuBtn.classList.toggle('active', isOpen);
-                mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
-                // Update menu, so current is active highlighted
-                updateMobileMenuActive();
-            });
-
-            // Load the first sheet by default
-            if(mySheets.length > 0) loadSheet(0);
         }
 
-        function updateDesktopMenuActive() {
-            const buttons = navBtns.querySelectorAll('.nav-btn');
-            buttons.forEach((b, i) => b.classList.toggle('active', i === currentSheetIndex));
-        }
-        function updateMobileMenuActive() {
-            const mbBtns = mobileNavBtns.querySelectorAll('.nav-btn');
-            mbBtns.forEach((b, i) => b.classList.toggle('active', i === currentSheetIndex));
-        }
+        function loadSheet(idx) {
+            currentSheetIndex = idx;
+            renderNavButtons(navBtns);
+            renderNavButtons(mobileBottomNav);
 
-        // Render table
-        function createTable(headers, rows) {
-            grid.innerHTML = '';
-            const table = document.createElement('table');
-            table.className = 'fpl-table';
-            // Head
-            const thead = document.createElement('thead');
-            thead.innerHTML = `
-                <tr>
-                    ${headers.map(h => `<th>${h}</th>`).join('')}
-                </tr>
-            `;
-            table.appendChild(thead);
-            // Body
-            const tbody = document.createElement('tbody');
-            for (let i = 1; i < rows.length; i++) {
-                const cols = rows[i].split(',');
-                const row = document.createElement('tr');
-                row.innerHTML = cols.map((val, j) => 
-                    `<td data-label="${headers[j]}">${val || '-'}</td>`
-                ).join('');
-                tbody.appendChild(row);
-            }
-            table.appendChild(tbody);
-            grid.appendChild(table);
-        }
-
-        // Fetch and display
-        async function loadSheet(index) {
-            currentSheetIndex = index;
-            updateDesktopMenuActive();
-            updateMobileMenuActive();
-
-            sheetTitle.innerText = mySheets[index].name;
+            sheetTitle.innerText = mySheets[idx].name;
             grid.innerHTML = '<div class="loading">loading...</div>';
 
-            try {
-                const response = await fetch(mySheets[index].url);
-                const data = await response.text();
-                const rows = data.split('\n').map(r => r.trim()).filter(r => r.length > 0);
-                const headers = rows[0].split(',');
-                createTable(headers, rows);
-            } catch (error) {
-                console.error(error);
-                grid.innerHTML = '<div class="loading">Error loading data. Check links.</div>';
-            }
+            fetch(mySheets[idx].url)
+                .then(response => response.text())
+                .then(data => {
+                    const rows = data.split('\n').map(r => r.trim()).filter(r => r.length > 0);
+                    const headers = rows[0].split(',');
+                    grid.innerHTML = '';
+                    const table = document.createElement('table');
+                    table.className = 'fpl-table';
+                    table.innerHTML = `
+                        <thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+                        <tbody>
+                            ${rows.slice(1).map(row => {
+                                const cols = row.split(',');
+                                return `<tr>${cols.map((val,j) => `<td data-label="${headers[j]}">${val||'-'}</td>`).join('')}</tr>`;
+                            }).join('')}
+                        </tbody>
+                    `;
+                    grid.appendChild(table);
+                })
+                .catch(() => grid.innerHTML = '<div class="loading">Error loading data. Check links.</div>');
+        }
+
+        function initMenu() {
+            renderNavButtons(navBtns);
+            renderNavButtons(mobileBottomNav);
+            if(mySheets.length) loadSheet(0);
         }
 
         initMenu();
-
-        // If mobile, close popover when clicking outside
-        document.addEventListener('click', function(e) {
-            if(window.innerWidth <= 700) {
-                if (!mobileNavBtns.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                    mobileNavBtns.classList.remove('open');
-                    mobileMenuBtn.classList.remove('active');
-                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
-                }
-            }
-        });
     </script>
 </body>
 </html>
