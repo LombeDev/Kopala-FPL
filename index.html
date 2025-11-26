@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPL Data Dashboard</title>
+    <style>
+        /* --- FPL THEME CSS --- */
+        :root {
+            --fpl-purple: #37003C;
+            --fpl-green: #00FF87;
+            --fpl-pink: #D2005F; /* Added Pink for accent */
+            --fpl-grey: #EBEBEB;
+            --text-dark: #242424;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--fpl-grey);
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--fpl-purple);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--fpl-green);
+        }
+
+        header h1 { margin: 0; font-weight: 800; letter-spacing: -1px; }
+
+        /* Navigation Tabs */
+        .nav-container {
+            background-color: #ffffff;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background-color: transparent;
+            border: 2px solid var(--fpl-purple);
+            color: var(--fpl-purple);
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background-color: #f3e5f5;
+        }
+
+        .nav-btn.active {
+            background-color: var(--fpl-purple);
+            color: var(--fpl-green);
+            border-color: var(--fpl-purple);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Data Grid */
+        #data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* Card Styling */
+        .player-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--fpl-purple) 0%, #5e0066 100%);
+            color: white;
+            padding: 12px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-tag {
+            background-color: var(--fpl-pink);
+            font-size: 0.7em;
+            padding: 2px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+        }
+
+        .card-body { padding: 15px; }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 4px;
+        }
+
+        .stat-value { font-weight: bold; color: var(--fpl-purple); }
+        .loading { text-align: center; padding: 50px; color: #666; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>FPL SCOUT</h1>
+    </header>
+
+    <div class="nav-container" id="nav-menu"></div>
+
+    <div class="container">
+        <h2 id="current-sheet-name" style="color: var(--fpl-purple);">Loading...</h2>
+        <div id="data-grid"></div>
+    </div>
+
+    <script>
+        // --- 1. CONFIGURATION AREA ---
+        // Add as many sheets as you want here. 
+        // Name: The text on the button
+        // URL: The specific CSV link for that tab
+        
+        const mySheets = [
+            {
+                name: "Goalkeepers",
+                url: "YOUR_GOALKEEPER_CSV_LINK_HERE" 
+            },
+            {
+                name: "Defenders",
+                url: "YOUR_DEFENDER_CSV_LINK_HERE"
+            },
+            {
+                name: "Midfielders",
+                url: "YOUR_MIDFIELDER_CSV_LINK_HERE"
+            }
+        ];
+
+        // --- 2. APP LOGIC ---
+        const grid = document.getElementById('data-grid');
+        const navMenu = document.getElementById('nav-menu');
+        const sheetTitle = document.getElementById('current-sheet-name');
+
+        // Create Navigation Buttons
+        function initMenu() {
+            mySheets.forEach((sheet, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'nav-btn';
+                btn.innerText = sheet.name;
+                btn.onclick = () => loadSheet(index);
+                navMenu.appendChild(btn);
+            });
+            
+            // Load the first sheet by default
+            if(mySheets.length > 0) loadSheet(0);
+        }
+
+        // Fetch and Display Data
+        async function loadSheet(index) {
+            // Update Active Button styling
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            buttons[index].classList.add('active');
+
+            // Update Title and show loading
+            sheetTitle.innerText = mySheets[index].name;
+            grid.innerHTML = '<div class="loading">Scouting players...</div>';
+
+            try {
+                const response = await fetch(mySheets[index].url);
+                const data = await response.text();
+                
+                const rows = data.split('\n').map(r => r.trim()).filter(r => r.length > 0);
+                const headers = rows[0].split(','); // Assumes Row 1 is headers
+
+                grid.innerHTML = ''; // Clear loading
+
+                for (let i = 1; i < rows.length; i++) {
+                    // Handle commas inside quotes logic is complex, 
+                    // keeping simple split for now:
+                    const columns = rows[i].split(','); 
+                    createCard(headers, columns);
+                }
+
+            } catch (error) {
+                console.error(error);
+                grid.innerHTML = '<div class="loading">Error loading data. Check links.</div>';
+            }
+        }
+
+        function createCard(headers, columns) {
+            const card = document.createElement('div');
+            card.className = 'player-card';
+
+            const name = columns[0] || 'Unknown';
+            // Optional: Use 2nd column as a "Tag" (like Team name) if it exists
+            const team = columns[1] || ''; 
+            
+            let statsHtml = '';
+            // Start loop from 2 to skip Name and Team in the details list
+            // Or start from 1 if you want Team in the list
+            for(let k = 1; k < headers.length; k++) {
+                const val = columns[k] || '-';
+                statsHtml += `
+                    <div class="stat-row">
+                        <span class="stat-label">${headers[k]}</span>
+                        <span class="stat-value">${val}</span>
+                    </div>
+                `;
+            }
+
+            card.innerHTML = `
+                <div class="card-header">
+                    ${name}
+                    ${team ? `<span class="card-tag">${team}</span>` : ''}
+                </div>
+                <div class="card-body">
+                    ${statsHtml}
+                </div>
+            `;
+            grid.appendChild(card);
+        }
+
+        // Start the app
+        initMenu();
+    </script>
+</body>
+</html>
