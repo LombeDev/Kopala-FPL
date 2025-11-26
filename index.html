@@ -29,7 +29,7 @@
         header h1 { margin: 0; font-weight: 800; letter-spacing: -1px; }
         .nav-container {
             background-color: #fff;
-            padding: 15px;
+            padding: 12px 0 12px 0;
             text-align: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             position: sticky;
@@ -38,14 +38,14 @@
         }
         .nav-btn {
             background-color: transparent;
-            border: 2px solid var(--fpl-purple);
+            border: 1px solid var(--fpl-purple);
             color: var(--fpl-purple);
-            padding: 8px 16px;
-            margin: 0 5px;
-            border-radius: 20px;
+            padding: 5px 10px;
+            margin: 0 2px;
+            border-radius: 16px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.9em;
+            font-size: 0.75em;
             transition: all 0.2s;
         }
         .nav-btn:hover {
@@ -109,7 +109,53 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 4px;
+        }
+        /* Sticky mobile menu button styles */
+        .sticky-bottom-menu-btn {
+            display: none;
+            position: fixed;
+            bottom: 18px;
+            right: 18px;
+            z-index: 103;
+            background-color: var(--fpl-purple);
+            color: var(--fpl-green);
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+            padding: 12px 24px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .sticky-bottom-menu-btn.active {
+            background-color: var(--fpl-green);
+            color: var(--fpl-purple);
+        }
+        /* Mobile menu popover */
+        .nav-btns.mobile-popover {
+            display: none;
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 102;
+            background: #fff;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0;
+            padding: 14px 8px 16px 8px;
+            border-radius: 14px 14px 0 0;
+            box-shadow: 0 -3px 20px rgba(0,0,0,0.17);
+        }
+        .nav-btns.mobile-popover.open {
+            display: flex;
+        }
+        .nav-btns.mobile-popover .nav-btn {
+            margin: 3px 0;
+            font-size: 1.1em;
+            padding: 12px 2px;
         }
         @media (max-width: 700px) {
             .nav-container {
@@ -118,16 +164,18 @@
             }
             .nav-btns {
                 display: none;
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
-                margin-top: 8px;
             }
             .nav-btns.open {
                 display: flex;
             }
             .hamburger {
                 display: block;
+            }
+            .sticky-bottom-menu-btn {
+                display: block;
+            }
+            .nav-btns.mobile-popover .nav-btn {
+                font-size: 1.1em;
             }
         }
         .container {
@@ -166,8 +214,6 @@
             padding: 50px;
             color: #666;
         }
-
-        /* NEW Mobile table layout: keep desktop table, just make it scrollable */
         @media (max-width: 700px) {
             .container {
                 padding: 0 5px;
@@ -205,6 +251,11 @@
         <div class="nav-btns" id="nav-btns"></div>
     </div>
 
+    <!-- Sticky mobile menu button (only visible on mobile) -->
+    <button class="sticky-bottom-menu-btn" id="mobile-menu-btn" aria-label="Open navigation menu" aria-controls="mobile-nav-btns" aria-expanded="false">Menu</button>
+    <!-- Popover menu for mobile -->
+    <div class="nav-btns mobile-popover" id="mobile-nav-btns"></div>
+    
     <div class="container">
         <h2 id="current-sheet-name" style="color: var(--fpl-purple);">Loading...</h2>
         <div id="data-grid"></div>
@@ -240,24 +291,38 @@
         const navBtns = document.getElementById('nav-btns');
         const hamburgerBtn = document.getElementById('hamburger-btn');
         const sheetTitle = document.getElementById('current-sheet-name');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileNavBtns = document.getElementById('mobile-nav-btns');
+
+        let currentSheetIndex = 0;
 
         function initMenu() {
             navBtns.innerHTML = '';
+            mobileNavBtns.innerHTML = '';
             mySheets.forEach((sheet, index) => {
+                // Desktop button
                 const btn = document.createElement('button');
                 btn.className = 'nav-btn';
                 btn.innerText = sheet.name;
                 btn.onclick = () => {
                     loadSheet(index);
-                    // Hide menu after selecting (on mobile)
-                    navBtns.classList.remove('open');
-                    hamburgerBtn.classList.remove('active');
-                    hamburgerBtn.setAttribute('aria-expanded', 'false');
                 };
                 navBtns.appendChild(btn);
+
+                // Mobile popover button (cloned logic)
+                const mbtn = document.createElement('button');
+                mbtn.className = 'nav-btn';
+                mbtn.innerText = sheet.name;
+                mbtn.onclick = () => {
+                    loadSheet(index);
+                    mobileNavBtns.classList.remove('open');
+                    mobileMenuBtn.classList.remove('active');
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                };
+                mobileNavBtns.appendChild(mbtn);
             });
 
-            // Hamburger menu toggle
+            // Hamburger menu toggle (desktop/top mobile)
             hamburgerBtn.addEventListener('click', () => {
                 navBtns.classList.toggle('open');
                 hamburgerBtn.classList.toggle('active');
@@ -265,8 +330,26 @@
                 hamburgerBtn.setAttribute('aria-expanded', String(!expanded));
             });
 
+            // Sticky mobile menu button
+            mobileMenuBtn.addEventListener('click', () => {
+                const isOpen = mobileNavBtns.classList.toggle('open');
+                mobileMenuBtn.classList.toggle('active', isOpen);
+                mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+                // Update menu, so current is active highlighted
+                updateMobileMenuActive();
+            });
+
             // Load the first sheet by default
             if(mySheets.length > 0) loadSheet(0);
+        }
+
+        function updateDesktopMenuActive() {
+            const buttons = navBtns.querySelectorAll('.nav-btn');
+            buttons.forEach((b, i) => b.classList.toggle('active', i === currentSheetIndex));
+        }
+        function updateMobileMenuActive() {
+            const mbBtns = mobileNavBtns.querySelectorAll('.nav-btn');
+            mbBtns.forEach((b, i) => b.classList.toggle('active', i === currentSheetIndex));
         }
 
         // Render table
@@ -298,9 +381,9 @@
 
         // Fetch and display
         async function loadSheet(index) {
-            const buttons = navBtns.querySelectorAll('.nav-btn');
-            buttons.forEach(b => b.classList.remove('active'));
-            if (buttons[index]) buttons[index].classList.add('active');
+            currentSheetIndex = index;
+            updateDesktopMenuActive();
+            updateMobileMenuActive();
 
             sheetTitle.innerText = mySheets[index].name;
             grid.innerHTML = '<div class="loading">loading...</div>';
@@ -318,6 +401,17 @@
         }
 
         initMenu();
+
+        // If mobile, close popover when clicking outside
+        document.addEventListener('click', function(e) {
+            if(window.innerWidth <= 700) {
+                if (!mobileNavBtns.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    mobileNavBtns.classList.remove('open');
+                    mobileMenuBtn.classList.remove('active');
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
     </script>
 </body>
 </html>
