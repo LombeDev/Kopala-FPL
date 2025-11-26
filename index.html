@@ -5,15 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kopala FPL</title>
     <style>
-        /* --- FPL THEME CSS --- */
         :root {
             --fpl-purple: #37003C;
             --fpl-green: #00FF87;
-            --fpl-pink: #D2005F; /* Added Pink for accent */
+            --fpl-pink: #D2005F;
             --fpl-grey: #EBEBEB;
             --text-dark: #242424;
         }
-
         body {
             font-family: 'Arial', sans-serif;
             background-color: var(--fpl-grey);
@@ -21,8 +19,6 @@
             padding: 0;
             color: var(--text-dark);
         }
-
-        /* Header */
         header {
             background-color: var(--fpl-purple);
             color: white;
@@ -30,12 +26,9 @@
             text-align: center;
             border-bottom: 4px solid var(--fpl-green);
         }
-
         header h1 { margin: 0; font-weight: 800; letter-spacing: -1px; }
-
-        /* Navigation Tabs */
         .nav-container {
-            background-color: #ffffff;
+            background-color: #fff;
             padding: 15px;
             text-align: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
@@ -43,7 +36,6 @@
             top: 0;
             z-index: 100;
         }
-
         .nav-btn {
             background-color: transparent;
             border: 2px solid var(--fpl-purple);
@@ -56,78 +48,160 @@
             font-size: 0.9em;
             transition: all 0.2s;
         }
-
         .nav-btn:hover {
             background-color: #f3e5f5;
         }
-
         .nav-btn.active {
             background-color: var(--fpl-purple);
             color: var(--fpl-green);
             border-color: var(--fpl-purple);
         }
-
-        /* Container */
+        /* Hamburger icon styling */
+        .hamburger {
+            display: none;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            position: absolute;
+            left: 16px;
+            top: 14px;
+            z-index: 101;
+        }
+        .hamburger span, .hamburger span:before, .hamburger span:after {
+            display: block;
+            position: absolute;
+            width: 28px;
+            height: 4px;
+            background: var(--fpl-purple);
+            border-radius: 2px;
+            transition: 0.3s all ease;
+        }
+        .hamburger span {
+            top: 50%;
+            left: 6px;
+            margin-top: -2px;
+        }
+        .hamburger span:before {
+            content:"";
+            top: -10px;
+            left: 0;
+        }
+        .hamburger span:after {
+            content:"";
+            top: 10px;
+            left: 0;
+        }
+        .hamburger.active span {
+            background: transparent;
+        }
+        .hamburger.active span:before {
+            top: 0;
+            transform: rotate(45deg);
+        }
+        .hamburger.active span:after {
+            top: 0;
+            transform: rotate(-45deg);
+        }
+        .nav-btns {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        @media (max-width: 700px) {
+            .nav-container {
+                padding-top: 48px;
+                text-align: left;
+            }
+            .nav-btns {
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                margin-top: 8px;
+            }
+            .nav-btns.open {
+                display: flex;
+            }
+            .hamburger {
+                display: block;
+            }
+        }
         .container {
             max-width: 1200px;
             margin: 30px auto;
             padding: 0 20px;
         }
-
-        /* Data Grid */
-        #data-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        /* Card Styling */
-        .player-card {
+        /* --- TABLE STYLES --- */
+        .fpl-table {
+            width: 100%;
+            border-collapse: collapse;
             background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.2s ease;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card-header {
-            background: linear-gradient(135deg, var(--fpl-purple) 0%, #5e0066 100%);
-            color: white;
-            padding: 12px 15px;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .card-tag {
-            background-color: var(--fpl-pink);
-            font-size: 0.7em;
-            padding: 2px 8px;
             border-radius: 10px;
-            text-transform: uppercase;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            margin: 0 auto;
+            font-size: 1em;
         }
-
-        .card-body { padding: 15px; }
-
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 0.9em;
+        .fpl-table th,
+        .fpl-table td {
+            padding: 12px 10px;
+            text-align: left;
             border-bottom: 1px solid #f0f0f0;
-            padding-bottom: 4px;
         }
-
-        .stat-value { font-weight: bold; color: var(--fpl-purple); }
-        .loading { text-align: center; padding: 50px; color: #666; }
-
+        .fpl-table th {
+            background-color: var(--fpl-purple);
+            color: var(--fpl-green);
+            font-weight: bold;
+        }
+        .fpl-table tr:last-child td {
+            border-bottom: none;
+        }
+        @media (max-width: 700px) {
+            .fpl-table,
+            .fpl-table thead,
+            .fpl-table tbody,
+            .fpl-table th,
+            .fpl-table td,
+            .fpl-table tr {
+                display: block;
+            }
+            .fpl-table thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            .fpl-table tr {
+                margin: 0 0 1rem 0;
+                background: white;
+                border-radius: 6px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            }
+            .fpl-table td {
+                border: none;
+                padding: 8px 12px;
+                position: relative;
+                padding-left: 50%;
+            }
+            .fpl-table td:before {
+                position: absolute;
+                top: 8px;
+                left: 12px;
+                width: 45%;
+                white-space: nowrap;
+                content: attr(data-label);
+                color: var(--fpl-purple);
+                font-weight: bold;
+            }
+        }
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
@@ -136,7 +210,13 @@
         <h1>KOPALA FPL TEAM PLANNER</h1>
     </header>
 
-    <div class="nav-container" id="nav-menu"></div>
+    <div class="nav-container" id="nav-menu">
+        <!-- Hamburger icon -->
+        <button class="hamburger" id="hamburger-btn" aria-label="Menu" aria-controls="nav-btns" aria-expanded="false">
+            <span></span>
+        </button>
+        <div class="nav-btns" id="nav-btns"></div>
+    </div>
 
     <div class="container">
         <h2 id="current-sheet-name" style="color: var(--fpl-purple);">Loading...</h2>
@@ -145,26 +225,19 @@
 
     <script>
         // --- 1. CONFIGURATION AREA ---
-        // Add as many sheets as you want here. 
-        // Name: The text on the button
-        // URL: The specific CSV link for that tab
-        
         const mySheets = [
             {
                 name: "KOPALA FPL GW1",
                 url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1209971248&single=true&output=csv" 
             },
-           {
-                name: "MEMBER",
+            {
+                name: "MEMBERS",
                 url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=2125414706&single=true&output=csv" 
             },
-
-          {
+            {
                 name: "FIXTURE PLANNER",
                 url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1206177471&single=true&output=csv" 
             },
-
-            
             {
                 name: "DAILY FEED",
                 url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1939677819&single=true&output=csv"
@@ -177,90 +250,86 @@
 
         // --- 2. APP LOGIC ---
         const grid = document.getElementById('data-grid');
-        const navMenu = document.getElementById('nav-menu');
+        const navBtns = document.getElementById('nav-btns');
+        const hamburgerBtn = document.getElementById('hamburger-btn');
         const sheetTitle = document.getElementById('current-sheet-name');
 
-        // Create Navigation Buttons
         function initMenu() {
+            navBtns.innerHTML = '';
             mySheets.forEach((sheet, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'nav-btn';
                 btn.innerText = sheet.name;
-                btn.onclick = () => loadSheet(index);
-                navMenu.appendChild(btn);
+                btn.onclick = () => {
+                    loadSheet(index);
+                    // Hide menu after selecting (on mobile)
+                    navBtns.classList.remove('open');
+                    hamburgerBtn.classList.remove('active');
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                };
+                navBtns.appendChild(btn);
             });
-            
+
+            // Hamburger menu toggle
+            hamburgerBtn.addEventListener('click', () => {
+                navBtns.classList.toggle('open');
+                hamburgerBtn.classList.toggle('active');
+                const expanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
+                hamburgerBtn.setAttribute('aria-expanded', String(!expanded));
+            });
+
             // Load the first sheet by default
             if(mySheets.length > 0) loadSheet(0);
         }
 
-        // Fetch and Display Data
-        async function loadSheet(index) {
-            // Update Active Button styling
-            const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(b => b.classList.remove('active'));
-            buttons[index].classList.add('active');
+        // Render table
+        function createTable(headers, rows) {
+            grid.innerHTML = '';
+            const table = document.createElement('table');
+            table.className = 'fpl-table';
+            // Head
+            const thead = document.createElement('thead');
+            thead.innerHTML = `
+                <tr>
+                    ${headers.map(h => `<th>${h}</th>`).join('')}
+                </tr>
+            `;
+            table.appendChild(thead);
+            // Body
+            const tbody = document.createElement('tbody');
+            for (let i = 1; i < rows.length; i++) {
+                const cols = rows[i].split(',');
+                const row = document.createElement('tr');
+                row.innerHTML = cols.map((val, j) => 
+                    `<td data-label="${headers[j]}">${val || '-'}</td>`
+                ).join('');
+                tbody.appendChild(row);
+            }
+            table.appendChild(tbody);
+            grid.appendChild(table);
+        }
 
-            // Update Title and show loading
+        // Fetch and display
+        async function loadSheet(index) {
+            const buttons = navBtns.querySelectorAll('.nav-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            if (buttons[index]) buttons[index].classList.add('active');
+
             sheetTitle.innerText = mySheets[index].name;
             grid.innerHTML = '<div class="loading">loading...</div>';
 
             try {
                 const response = await fetch(mySheets[index].url);
                 const data = await response.text();
-                
                 const rows = data.split('\n').map(r => r.trim()).filter(r => r.length > 0);
-                const headers = rows[0].split(','); // Assumes Row 1 is headers
-
-                grid.innerHTML = ''; // Clear loading
-
-                for (let i = 1; i < rows.length; i++) {
-                    // Handle commas inside quotes logic is complex, 
-                    // keeping simple split for now:
-                    const columns = rows[i].split(','); 
-                    createCard(headers, columns);
-                }
-
+                const headers = rows[0].split(',');
+                createTable(headers, rows);
             } catch (error) {
                 console.error(error);
                 grid.innerHTML = '<div class="loading">Error loading data. Check links.</div>';
             }
         }
 
-        function createCard(headers, columns) {
-            const card = document.createElement('div');
-            card.className = 'player-card';
-
-            const name = columns[0] || 'Unknown';
-            // Optional: Use 2nd column as a "Tag" (like Team name) if it exists
-            const team = columns[1] || ''; 
-            
-            let statsHtml = '';
-            // Start loop from 2 to skip Name and Team in the details list
-            // Or start from 1 if you want Team in the list
-            for(let k = 1; k < headers.length; k++) {
-                const val = columns[k] || '-';
-                statsHtml += `
-                    <div class="stat-row">
-                        <span class="stat-label">${headers[k]}</span>
-                        <span class="stat-value">${val}</span>
-                    </div>
-                `;
-            }
-
-            card.innerHTML = `
-                <div class="card-header">
-                    ${name}
-                    ${team ? `<span class="card-tag">${team}</span>` : ''}
-                </div>
-                <div class="card-body">
-                    ${statsHtml}
-                </div>
-            `;
-            grid.appendChild(card);
-        }
-
-        // Start the app
         initMenu();
     </script>
 </body>
