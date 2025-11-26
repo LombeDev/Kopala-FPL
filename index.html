@@ -154,6 +154,17 @@
                 name: "KOPALA FPL GW1",
                 url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1209971248&single=true&output=csv" 
             },
+           {
+                name: "MEMBER",
+                url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=2125414706&single=true&output=csv" 
+            },
+
+          {
+                name: "FIXTURE PLANNER",
+                url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1206177471&single=true&output=csv" 
+            },
+
+            
             {
                 name: "DAILY FEED",
                 url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1939677819&single=true&output=csv"
@@ -192,7 +203,7 @@
 
             // Update Title and show loading
             sheetTitle.innerText = mySheets[index].name;
-            grid.innerHTML = '<div class="loading">Scouting players...</div>';
+            grid.innerHTML = '<div class="loading">loading...</div>';
 
             try {
                 const response = await fetch(mySheets[index].url);
