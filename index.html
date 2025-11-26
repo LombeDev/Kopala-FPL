@@ -160,47 +160,34 @@
         .fpl-table tr:last-child td {
             border-bottom: none;
         }
-        @media (max-width: 700px) {
-            .fpl-table,
-            .fpl-table thead,
-            .fpl-table tbody,
-            .fpl-table th,
-            .fpl-table td,
-            .fpl-table tr {
-                display: block;
-            }
-            .fpl-table thead tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-            .fpl-table tr {
-                margin: 0 0 1rem 0;
-                background: white;
-                border-radius: 6px;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-            }
-            .fpl-table td {
-                border: none;
-                padding: 8px 12px;
-                position: relative;
-                padding-left: 50%;
-            }
-            .fpl-table td:before {
-                position: absolute;
-                top: 8px;
-                left: 12px;
-                width: 45%;
-                white-space: nowrap;
-                content: attr(data-label);
-                color: var(--fpl-purple);
-                font-weight: bold;
-            }
-        }
+
         .loading {
             text-align: center;
             padding: 50px;
             color: #666;
+        }
+
+        /* NEW Mobile table layout: keep desktop table, just make it scrollable */
+        @media (max-width: 700px) {
+            .container {
+                padding: 0 5px;
+            }
+            #data-grid {
+                overflow-x: auto;
+                width: 100%;
+            }
+            .fpl-table {
+                width: 100%;
+                min-width: 600px;
+                font-size: 0.97em;
+            }
+            .fpl-table th, .fpl-table td {
+                padding: 10px 6px;
+                min-width: 90px;
+            }
+            .fpl-table td:before {
+                content: none !important;
+            }
         }
     </style>
 </head>
