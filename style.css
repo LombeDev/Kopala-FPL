@@ -160,3 +160,61 @@ header h1 {
     #data-grid { overflow-x: auto; }
     .fpl-table { min-width: 600px; }
 }
+/* --- HAMBURGER (MOBILE) --- */
+.hamburger {
+    display: none;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    padding: 4px 10px;
+    color: white;
+}
+
+@media (max-width: 700px) {
+    .hamburger {
+        display: block;
+    }
+
+    .nav-container {
+        display: none !important; /* Hide top nav */
+    }
+}
+
+/* --- MOBILE SLIDE MENU --- */
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: -260px;
+    width: 260px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 12px rgba(0,0,0,0.15);
+    padding: 20px;
+    transition: 0.35s ease-in-out;
+    z-index: 9999;
+}
+
+.mobile-menu.active {
+    right: 0;
+}
+
+.mobile-menu .nav-btn {
+    display: block;
+    width: 100%;
+    margin: 6px 0;
+    font-size: 1em;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: left;
+}
+
+/* Dark mode compatibility */
+body.dark .mobile-menu {
+    background: #222;
+    color: white;
+}
+
