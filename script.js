@@ -46,7 +46,8 @@ function loadSheet(idx) {
     renderNavButtons(mobileMenuBtns);
 
     sheetTitle.innerText = mySheets[idx].name;
-    grid.innerHTML = '<div class="loading">loading...</div>';
+    grid.innerHTML = '<div class="spinner"></div>';
+
 
     fetch(mySheets[idx].url)
         .then(res => res.text())
