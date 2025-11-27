@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta-name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kopala FPL</title>
     <style>
         :root {
@@ -25,11 +25,8 @@
             padding: 20px;
             text-align: center;
             border-bottom: 4px solid var(--fpl-green);
-            position: relative;
         }
         header h1 { margin: 0; font-weight: 800; letter-spacing: -1px; }
-
-        /* Desktop Navigation */
         .nav-container {
             background-color: #fff;
             padding: 12px 0 12px 0;
@@ -56,52 +53,53 @@
             color: var(--fpl-green);
             border-color: var(--fpl-purple);
         }
+        /* Desktop layout nav */
         .nav-btns {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 4px;
         }
+    
+        .hamburger { display: none; }
 
-        /* Hamburger (Mobile Only) */
-        .hamburger {
-            display: none;
-            font-size: 32px;
-            cursor: pointer;
-            position: absolute;
-            right: 20px;
-            top: 18px;
-            color: white;
-            user-select: none;
-        }
-
-        /* Mobile dropdown menu */
-        .mobile-menu {
-            display: none;
-            background: white;
-            padding: 12px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            text-align: center;
-        }
-        .mobile-menu-btns button {
-            display: block;
-            width: 92%;
-            margin: 8px auto;
-            font-size: 1em;
-        }
-
-        /* Show hamburger and hide desktop nav on mobile */
+        /* --- STICKY BOTTOM NAV FOR MOBILE --- */
         @media (max-width: 700px) {
-            .hamburger { display: block; }
-            .nav-container { display: none; }
+            .nav-container {
+                display: none;
+            }
+            .mobile-bottom-nav {
+                display: flex;
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 999;
+                background: #fff;
+                box-shadow: 0 -2px 20px rgba(0,0,0,0.09);
+                border-top: 1px solid #ddd;
+                justify-content: space-around;
+                padding: 6px 0 6px 0;
+            }
+            .mobile-bottom-nav .nav-btn {
+                flex:1 1 auto;
+                margin: 0 2px;
+                font-size: 1em;
+                padding: 10px 2px;
+                border-radius: 16px;
+                border: 1.1px solid var(--fpl-purple);
+            }
         }
-
+        @media (min-width: 701px) {
+            .mobile-bottom-nav {
+                display: none !important;
+            }
+        }
         .container {
             max-width: 1200px;
             margin: 30px auto;
             padding: 0 20px;
         }
-
         .fpl-table {
             width: 100%;
             border-collapse: collapse;
@@ -130,11 +128,10 @@
             padding: 50px;
             color: #666;
         }
-
         @media (max-width: 700px) {
             .container {
                 padding: 0 5px;
-                margin-bottom: 20px;
+                margin-bottom: 70px;
             }
             #data-grid {
                 overflow-x: auto;
@@ -153,30 +150,23 @@
     </style>
 </head>
 <body>
-
-    <!-- HEADER + HAMBURGER -->
     <header>
         <h1>KOPALA FPL</h1>
-        <div class="hamburger" id="hamburger">&#9776;</div>
     </header>
 
-    <!-- MOBILE MENU -->
-    <div class="mobile-menu" id="mobile-menu">
-        <div class="mobile-menu-btns" id="mobile-menu-btns"></div>
-    </div>
-
-    <!-- DESKTOP NAV -->
     <div class="nav-container" id="nav-menu">
         <div class="nav-btns" id="nav-btns"></div>
     </div>
 
+    <div class="mobile-bottom-nav" id="mobile-bottom-nav"></div>
+    
     <div class="container">
         <h2 id="current-sheet-name" style="color: var(--fpl-purple);">Loading...</h2>
         <div id="data-grid"></div>
     </div>
 
     <script>
-        // --- 1. CONFIG ---
+        // --- 1. CONFIGURATION AREA ---
         const mySheets = [
             { name: "FPL Standings", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1209971248&single=true&output=csv" },
             { name: "Paid", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=2125414706&single=true&output=csv" },
@@ -188,17 +178,8 @@
         const grid = document.getElementById('data-grid');
         const navBtns = document.getElementById('nav-btns');
         const sheetTitle = document.getElementById('current-sheet-name');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileMenuBtns = document.getElementById('mobile-menu-btns');
-        const hamburger = document.getElementById("hamburger");
-
+        const mobileBottomNav = document.getElementById('mobile-bottom-nav');
         let currentSheetIndex = 0;
-
-        // Hamburger toggle
-        hamburger.onclick = () => {
-            mobileMenu.style.display =
-                mobileMenu.style.display === "block" ? "none" : "block";
-        };
 
         function renderNavButtons(container) {
             container.innerHTML = '';
@@ -206,56 +187,48 @@
                 const btn = document.createElement('button');
                 btn.className = 'nav-btn' + (idx === currentSheetIndex ? ' active' : '');
                 btn.innerText = sheet.name;
-                btn.onclick = () => {
-                    loadSheet(idx);
-                    mobileMenu.style.display = "none"; // close dropdown
-                };
+                btn.onclick = () => loadSheet(idx);
                 container.appendChild(btn);
             });
         }
 
         function loadSheet(idx) {
             currentSheetIndex = idx;
-
             renderNavButtons(navBtns);
-            renderNavButtons(mobileMenuBtns);
+            renderNavButtons(mobileBottomNav);
 
             sheetTitle.innerText = mySheets[idx].name;
             grid.innerHTML = '<div class="loading">loading...</div>';
 
             fetch(mySheets[idx].url)
-                .then(res => res.text())
-                .then(csv => {
-                    const rows = csv.split('\n').map(r => r.trim()).filter(r => r.length > 0);
+                .then(response => response.text())
+                .then(data => {
+                    const rows = data.split('\n').map(r => r.trim()).filter(r => r.length > 0);
                     const headers = rows[0].split(',');
-
                     grid.innerHTML = '';
                     const table = document.createElement('table');
                     table.className = 'fpl-table';
-
                     table.innerHTML = `
-                        <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+                        <thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
                         <tbody>
                             ${rows.slice(1).map(row => {
                                 const cols = row.split(',');
-                                return `<tr>${cols.map((val, j) => `<td>${val || '-'}</td>`).join('')}</tr>`;
+                                return `<tr>${cols.map((val,j) => `<td data-label="${headers[j]}">${val||'-'}</td>`).join('')}</tr>`;
                             }).join('')}
                         </tbody>
                     `;
-
                     grid.appendChild(table);
                 })
-                .catch(() => grid.innerHTML = '<div class="loading">Error loading data.</div>');
+                .catch(() => grid.innerHTML = '<div class="loading">Error loading data. Check links.</div>');
         }
 
         function initMenu() {
             renderNavButtons(navBtns);
-            renderNavButtons(mobileMenuBtns);
-            loadSheet(0);
+            renderNavButtons(mobileBottomNav);
+            if(mySheets.length) loadSheet(0);
         }
 
         initMenu();
     </script>
-
 </body>
 </html>
