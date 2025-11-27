@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kopala FPL</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
-            /* FPL Brand Colors */
             --fpl-purple: #37003C;
             --fpl-purple-light: #56005E;
             --fpl-green: #00FF87;
@@ -27,10 +28,8 @@
             margin: 0;
             padding: 0;
             color: var(--text-main);
-            -webkit-font-smoothing: antialiased;
         }
 
-        /* --- HEADER DESIGN --- */
         header {
             background: linear-gradient(135deg, var(--fpl-purple) 0%, #2a002e 100%);
             color: white;
@@ -40,9 +39,9 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        header h1 { 
-            margin: 0; 
-            font-weight: 700; 
+        header h1 {
+            margin: 0;
+            font-weight: 700;
             letter-spacing: -0.5px;
             font-size: 1.8rem;
             text-transform: uppercase;
@@ -58,7 +57,6 @@
             border-radius: 2px;
         }
 
-        /* --- DESKTOP NAVIGATION --- */
         .nav-container {
             background-color: var(--card-bg);
             padding: 15px 0;
@@ -76,7 +74,6 @@
             gap: 8px;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 10px;
         }
 
         .nav-btn {
@@ -89,254 +86,7 @@
             font-weight: 600;
             font-size: 0.9em;
             transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
         }
 
         .nav-btn:hover {
-            background-color: rgba(55, 0, 60, 0.05);
-            color: var(--fpl-purple);
-        }
-
-        .nav-btn.active {
-            background-color: var(--fpl-purple);
-            color: var(--fpl-green);
-            box-shadow: 0 4px 10px rgba(55, 0, 60, 0.3);
-        }
-
-        /* --- MAIN CONTENT LAYOUT --- */
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-            min-height: 60vh;
-        }
-
-        #current-sheet-name {
-            color: var(--fpl-purple);
-            font-weight: 700;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            border-left: 5px solid var(--fpl-pink);
-            padding-left: 15px;
-        }
-
-        /* --- TABLE DESIGN --- */
-        #data-grid {
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            overflow: hidden; /* Important for rounding corners */
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        /* Wrapper for scrolling */
-        .table-wrapper {
-            overflow-x: auto;
-            max-height: 75vh; /* Enables vertical scrolling within table */
-        }
-
-        .fpl-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            font-size: 0.95em;
-            white-space: nowrap;
-        }
-
-        .fpl-table th {
-            background-color: var(--fpl-purple);
-            color: white;
-            font-weight: 600;
-            padding: 16px 12px;
-            text-align: left;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            border-bottom: 3px solid var(--fpl-green);
-            text-transform: uppercase;
-            font-size: 0.8em;
-            letter-spacing: 0.5px;
-        }
-
-        .fpl-table td {
-            padding: 14px 12px;
-            border-bottom: 1px solid #f0f0f0;
-            color: var(--text-main);
-        }
-
-        /* Zebra Striping */
-        .fpl-table tbody tr:nth-child(even) {
-            background-color: #fcfcfc;
-        }
-
-        /* Hover Effect */
-        .fpl-table tbody tr:hover {
-            background-color: #f0f7ff;
-            transform: scale(1); /* Fix for border flickering */
-        }
-
-        /* --- LOADING SPINNER --- */
-        .loading {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px;
-            color: var(--text-muted);
-        }
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--fpl-pink);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 15px;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* --- MOBILE OPTIMIZATION --- */
-        
-        /* Mobile Bottom Nav */
-        .mobile-bottom-nav {
-            display: none; /* Hidden by default */
-        }
-
-        @media (max-width: 768px) {
-            .nav-container { display: none; }
-            
-            .container {
-                padding: 0 15px;
-                margin-top: 20px;
-                margin-bottom: 100px; /* Space for bottom nav */
-            }
-
-            .mobile-bottom-nav {
-                display: flex;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background: white;
-                box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
-                z-index: 1000;
-                padding: 10px 5px;
-                justify-content: space-around;
-                border-top-left-radius: 15px;
-                border-top-right-radius: 15px;
-            }
-
-            .mobile-bottom-nav .nav-btn {
-                flex: 1;
-                text-align: center;
-                font-size: 0.75rem;
-                padding: 8px 4px;
-                margin: 0 2px;
-                border-radius: 8px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            .mobile-bottom-nav .nav-btn.active {
-                background-color: var(--fpl-purple-light);
-                color: var(--fpl-green);
-            }
-
-            /* Improve table readability on mobile */
-            .fpl-table { font-size: 0.85em; }
-            .fpl-table th, .fpl-table td { padding: 10px 8px; }
-            
-            header h1 { font-size: 1.5rem; }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Kopala FPL</h1>
-    </header>
-
-    <div class="nav-container" id="nav-menu">
-        <div class="nav-btns" id="nav-btns"></div>
-    </div>
-
-    <div class="mobile-bottom-nav" id="mobile-bottom-nav"></div>
-    
-    <div class="container">
-        <h2 id="current-sheet-name">Loading...</h2>
-        <div id="data-grid"></div>
-    </div>
-
-    <script>
-        // --- 1. CONFIGURATION AREA ---
-        const mySheets = [
-            { name: "Live Rank", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1209971248&single=true&output=csv" },
-            { name: "Members", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=2125414706&single=true&output=csv" },
-            { name: "Fixture Ticker", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1206177471&single=true&output=csv" },
-            { name: "Articles", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1939677819&single=true&output=csv" },
-            { name: "Price Change", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=534532114&single=true&output=csv" }
-        ];
-
-        const grid = document.getElementById('data-grid');
-        const navBtns = document.getElementById('nav-btns');
-        const sheetTitle = document.getElementById('current-sheet-name');
-        const mobileBottomNav = document.getElementById('mobile-bottom-nav');
-        let currentSheetIndex = 0;
-
-        function renderNavButtons(container) {
-            container.innerHTML = '';
-            mySheets.forEach((sheet, idx) => {
-                const btn = document.createElement('button');
-                btn.className = 'nav-btn' + (idx === currentSheetIndex ? ' active' : '');
-                btn.innerText = sheet.name;
-                btn.onclick = () => loadSheet(idx);
-                container.appendChild(btn);
-            });
-        }
-
-        function loadSheet(idx) {
-            currentSheetIndex = idx;
-            renderNavButtons(navBtns);
-            renderNavButtons(mobileBottomNav);
-
-            sheetTitle.innerText = mySheets[idx].name;
-            // Enhanced Loading State with Spinner
-            grid.innerHTML = '<div class="loading"><div class="spinner"></div><div>Crunching data...</div></div>';
-
-            fetch(mySheets[idx].url)
-                .then(response => response.text())
-                .then(data => {
-                    const rows = data.split('\n').map(r => r.trim()).filter(r => r.length > 0);
-                    // Basic CSV parsing
-                    const headers = rows[0].split(',');
-                    
-                    grid.innerHTML = '';
-                    
-                    // Create wrapper for scrolling
-                    const wrapper = document.createElement('div');
-                    wrapper.className = 'table-wrapper';
-
-                    const table = document.createElement('table');
-                    table.className = 'fpl-table';
-                    table.innerHTML = `
-                        <thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
-                        <tbody>
-                            ${rows.slice(1).map(row => {
-                                // Note: Simple split(',') can break if data has commas inside quotes.
-                                // Kept as requested to not change logic, but be aware.
-                                const cols = row.split(','); 
-                                return `<tr>${cols.map((val,j) => `<td data-label="${headers[j]}">${val||'-'}</td>`).join('')}</tr>`;
-                            }).join('')}
-                        </tbody>
-                    `;
-                    wrapper.appendChild(table);
-                    grid.appendChild(wrapper);
-                })
-                .catch(err => {
-                    console.error(err);
-                    grid.innerHTML = '<div class="loading" style="color:red">Error loading data. Please check connection.</div>';
-                });
-        }
-
-        function initMenu() {
-            renderNavButtons(navBtns
+            background-color: rgba(55, 0, 60, 0.05
