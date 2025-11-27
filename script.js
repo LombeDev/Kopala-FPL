@@ -78,7 +78,11 @@ function initMenu() {
     renderNavButtons(navBtns);
     renderNavButtons(mobileMenuBtns);
     loadSheet(0);
-}
+
+
+initMenu();
+
+    }
 const hamburger = document.getElementById("hamburger");
 const mobileMenu = document.getElementById("mobile-menu");
 const mobileMenuBtns = document.getElementById("mobile-menu-btns");
@@ -109,5 +113,3 @@ document.addEventListener("click", (e) => {
         mobileMenu.classList.remove("active");
     }
 });
-
-initMenu();
