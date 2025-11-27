@@ -79,5 +79,35 @@ function initMenu() {
     renderNavButtons(mobileMenuBtns);
     loadSheet(0);
 }
+const hamburger = document.getElementById("hamburger");
+const mobileMenu = document.getElementById("mobile-menu");
+const mobileMenuBtns = document.getElementById("mobile-menu-btns");
+
+// Reuse your function to generate buttons
+function renderMobileMenu() {
+    mobileMenuBtns.innerHTML = '';
+    mySheets.forEach((sheet, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "nav-btn" + (idx === currentSheetIndex ? " active" : "");
+        btn.innerText = sheet.name;
+        btn.onclick = () => {
+            loadSheet(idx);
+            mobileMenu.classList.remove("active"); // Close menu
+        };
+        mobileMenuBtns.appendChild(btn);
+    });
+}
+
+// Toggle panel
+hamburger.addEventListener("click", () => {
+    mobileMenu.classList.toggle("active");
+});
+
+// Close menu when clicking outside
+document.addEventListener("click", (e) => {
+    if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+        mobileMenu.classList.remove("active");
+    }
+});
 
 initMenu();
