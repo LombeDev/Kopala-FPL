@@ -229,7 +229,7 @@ header {
     .container { padding: 0 5px; } 
     /* TABLE */
     #data-grid { overflow-x: auto; }
-    .fpl-table { min-width: 100px; }
+    .fpl-table { min-width: 150px; }
 }
 
 
