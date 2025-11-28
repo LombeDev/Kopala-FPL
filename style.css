@@ -326,8 +326,8 @@ header {
 
 /* Loading Spinner */
 .spinner {
-    width: 48px;
-    height: 48px;
+    width: 38px;
+    height: 38px;
     border: 4px solid #ddd;
     border-top-color: var(--fpl-purple);
     border-radius: 50%;
