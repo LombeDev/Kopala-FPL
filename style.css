@@ -220,58 +220,98 @@ header {
     border-color: var(--fpl-purple);
 }
 
-/* MOBILE BEHAVIOR: Screens 700px and smaller */
-@media (max-width: 700px) {
+/* MOBILE BEHAVIOR */
+
+@media (max-width: 200px) {
+
+    /* Hide the desktop nav on mobile */
+
+    .nav-container { display: none; } 
+
     
+
     /* WRAPPER */
-    .container { 
-        padding: 0 5px; 
-    } 
-    
-    /* 1. TABLE WRAPPER: Remove horizontal scrolling */
-    #data-grid { 
-        /* Ensure no horizontal overflow */
-        overflow-x: hidden; 
-    }
-    
-    /* 2. TABLE TRANSFORMATION */
-    .fpl-table {
-        border: none; /* Remove table borders for the "card" look */
-        width: 100%; /* Ensure it fills the container */
-        min-width: 0; /* Important: Remove the minimum width */
-    }
 
-    .fpl-table thead {
-        /* Hide the actual table header (<th>s) as they will be repeated in each row */
-        position: absolute;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        width: 1px;
-    }
+    .container { padding: 0 5px; } 
 
-    .fpl-table tr {
-        display: block; /* Treat each row as a separate block */
-        margin-bottom: 15px; /* Add space between "cards" */
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
+    /* TABLE */
 
-    .fpl-table td {
-        /* Treat each cell as a block to stack them vertically */
-        display: block;
-        text-align: right;
-        padding-left: 50%; /* Make space for the pseudo-element label */
-        position: relative;
-        border-bottom: 1px solid #f0f0f0;
-    }
-    
-    .fpl-table td:last-child {
-        border-bottom: none;
-    }
+    #data-grid { overflow-x: auto; }
+
+    .fpl-table { min-width: 150px; }
+
+}
+
+
+/* WRAPPER */
+
+.container {
+
+    max-width: 1200px;
+
+    margin: 30px auto;
+
+    padding: 0 20px;
+
+}
+
+
+
+/* TABLE */
+
+.fpl-table {
+
+    width: 50%;
+
+    border-collapse: collapse;
+
+    background: white;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+
+    margin: 0 auto;
+
+    font-size: 1em;
+
+}
+
+
+
+.fpl-table th,
+
+.fpl-table td {
+
+    padding: 12px 10px;
+
+    text-align: left;
+
+    border-bottom: 1px solid #f0f0f0;
+
+}
+
+
+
+.fpl-table th {
+
+    background-color: var(--fpl-purple);
+
+    color: var(--fpl-green);
+
+    font-weight: bold;
+
+}
+
+
+
+.fpl-table tr:last-child td {
+
+    border-bottom: none;
+
+}
 
     /* 3. INJECT HEADERS as Labels */
     /* NOTE: Since your data is dynamic CSV, you must use JavaScript to inject the header labels.
@@ -282,19 +322,7 @@ header {
     .fpl-table td:nth-of-type(2):before { content: "Header 2 Name:"; }
     */
 
-    /* Placeholder styles for the injected label */
-    .fpl-table td::before {
-        content: attr(data-label); /* Uses a data attribute set by JS */
-        position: absolute;
-        left: 0;
-        width: 45%;
-        padding-left: 10px;
-        white-space: nowrap;
-        text-align: left;
-        font-weight: bold;
-        color: var(--text-dark);
-    }
-}
+   
 
 /* Loading Spinner */
 .spinner {
