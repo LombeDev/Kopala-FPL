@@ -202,11 +202,11 @@ header {
 
 .nav-btn {
     background-color: transparent;
-    border: nono;
+    border: none;
     color: var(--fpl-purple);
     padding: 5px 10px;
     margin: 0 2px;
-    border-radius: 16px;
+    border-radius: none;
     cursor: pointer;
     font-weight: bold;
     font-size: 0.75em;
