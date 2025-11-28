@@ -55,6 +55,27 @@ header {
     line-height: 1; /* Ensure alignment */
 }
 
+/* Update the existing .menu-button styles */
+.menu-button {
+    /* Styles matching the final image: white border, purple background on desktop (if you need that logic) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid white; 
+    color: white; /* Icon color */
+    padding: 10px; /* Adjust padding to set the size */
+    border-radius: 5px;
+    font-size: 1.2em; /* Size of the icon */
+    cursor: pointer;
+    line-height: 1;
+}
+
+/* Ensure the Font Awesome icon is styled */
+.menu-toggle-icon {
+    transition: transform 0.3s ease; /* Add a smooth transition for the icon change */
+}
+
 /* New: Style the Subscribe button (The heart button) */
 .subscribe-button {
     display: flex;
