@@ -221,7 +221,7 @@ header {
 }
 
 /* MOBILE BEHAVIOR */
-@media (max-width: 200px) {
+@media (max-width: 250px) {
     /* Hide the desktop nav on mobile */
     .nav-container { display: none; } 
     
