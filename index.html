@@ -5,31 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kopala FPL</title>
 
-    <!-- LINKED CSS -->
     <link rel="stylesheet" href="style.css">
-</head>
+    
+    </head>
 
 <body>
 
-    <!-- HEADER + HAMBURGER -->
     <header>
-        <h1>KOPALA FPL</h1>
-        <div class="hamburger" id="hamburger">
-    ☰
-</div>
+        <div class="top-bar">
+            <button class="menu-button" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i> Menu <i class="fas fa-chevron-down"></i>
+            </button>
+            <button class="subscribe-button">
+                <i class="fas fa-heart"></i> Subscribe
+            </button>
+        </div>
 
-<div class="mobile-menu" id="mobile-menu">
-    <div id="mobile-menu-btns"></div>
-</div>
-
+        <nav class="mobile-dropdown-menu" id="mobile-dropdown-menu">
+            <a href="#" class="menu-item">
+                <span class="icon-trophy">🏆</span> Bonus Points
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-defcon"></span> <span class="green-text">+2</span> Def Con
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-liverank"></span> <span class="green-text">▲</span> Live Rank
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-prices"></span> <span class="red-text">▼</span> Prices
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-fixtures">📅</span> Fixtures
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-setpieces">⚽</span> Set Pieces
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-kitcreator">👕</span> Kit creator
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-twat">⬇️</span> TWAT
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-articles">📰</span> Articles
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-injuries">⚠️</span> Injuries
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-statistics">📊</span> Statistics
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-toptransfers">📈</span> Top Transfers
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-expecteddata">🥅</span> Expected Data
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-suspension">🟨</span> Suspension
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-fixtureticker">🗓️</span> Fixture Ticker
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-top10k">👑</span> Top 10K
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon-captaincy">C</span> Captaincy
+            </a>
+        </nav>
     </header>
 
-    <!-- MOBILE MENU -->
-    <div class="mobile-menu" id="mobile-menu">
-        <div class="mobile-menu-btns" id="mobile-menu-btns"></div>
-    </div>
-
-    <!-- DESKTOP NAV -->
     <div class="nav-container" id="nav-menu">
         <div class="nav-btns" id="nav-btns"></div>
     </div>
@@ -39,7 +85,14 @@
         <div id="data-grid"></div>
     </div>
 
-    <!-- LINKED JS -->
+    <script>
+        // Simple function to toggle the menu visibility
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-dropdown-menu');
+            // Toggle the display property (Flex for visibility, none for hidden)
+            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        }
+    </script>
     <script src="script.js"></script>
 
 </body>
