@@ -4,7 +4,7 @@ const mySheets = [
     { name: "Paid", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=2125414706&single=true&output=csv", menuName: "Paid" },
     { name: "Fixtures", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1206177471&single=true&output=csv", menuName: "Fixtures" },
     { name: "EPL Table", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=354834265&single=true&output=csv", menuName: "EPL Table" },
-    { name: "Price", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=534532114&single=true&output=csv", menuName: "" }
+    { name: "Prices", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=534532114&single=true&output=csv", menuName: "Prices" }
    
 ];
 
