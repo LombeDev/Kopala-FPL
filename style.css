@@ -221,7 +221,7 @@ header {
 }
 
 /* MOBILE BEHAVIOR */
-@media (max-width: 400px) {
+@media (max-width: 200px) {
     /* Hide the desktop nav on mobile */
     .nav-container { display: none; } 
     
@@ -229,7 +229,7 @@ header {
     .container { padding: 0 5px; } 
     /* TABLE */
     #data-grid { overflow-x: auto; }
-    .fpl-table { min-width: 300px; }
+    .fpl-table { min-width: 100px; }
 }
 
 
