@@ -98,7 +98,7 @@ header {
 
 /* New: Style for the dropdown menu */
 .mobile-dropdown-menu {
-    position: absolute;
+    position: left;
     top: 100%; /* Position right below the header */
     left: 50%;
     transform: translateX(-50%); /* Center the menu */
