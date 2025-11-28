@@ -100,7 +100,7 @@ header {
 .mobile-dropdown-menu {
     position: absolute;
     top: 100%; /* Position right below the header */
-    left: 10%;
+    left: 25%;
     transform: translateX(-50%); /* Center the menu */
     width: 40%; 
     max-height: 80vh; /* Prevent menu from being too tall */
