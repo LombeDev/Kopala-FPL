@@ -202,7 +202,7 @@ header {
 
 .nav-btn {
     background-color: transparent;
-    border: 1px solid var(--fpl-purple);
+    border: nono;
     color: var(--fpl-purple);
     padding: 5px 10px;
     margin: 0 2px;
