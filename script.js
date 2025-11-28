@@ -76,7 +76,7 @@ function bindMobileMenuListeners() {
 // Function to handle the phone call
 function initiateSubscriptionCall() {
     // ⚠️ REPLACE THIS WITH THE ACTUAL PHONE NUMBER
-    const phoneNumber = '+1234567890'; 
+    const phoneNumber = '+260978263899'; 
     window.location.href = `tel:${phoneNumber}`;
 }
 
