@@ -89,7 +89,7 @@ header {
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
-    line-height: 1;
+    line-height: none;
 }
 
 .subscribe-button i {
@@ -102,7 +102,7 @@ header {
     top: 100%; /* Position right below the header */
     left: 50%;
     transform: translateX(-50%); /* Center the menu */
-    width: 90%; 
+    width: 40%; 
     max-height: 80vh; /* Prevent menu from being too tall */
     overflow-y: auto; /* Scroll if content overflows */
     background: white;
