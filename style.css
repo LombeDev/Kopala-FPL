@@ -242,7 +242,7 @@ header {
 
 /* TABLE */
 .fpl-table {
-    width: 100%;
+    width: 50%;
     border-collapse: collapse;
     background: white;
     border-radius: 10px;
