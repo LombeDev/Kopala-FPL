@@ -92,6 +92,23 @@ header {
     flex-direction: column;
     padding: 10px 0;
 }
+/* DESKTOP NAV */
+.nav-container {
+    background-color: #fff; /* White background */
+    padding: 12px 0 12px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: sticky; /* Keeps it visible at the top when scrolling */
+    top: 0;
+    z-index: 100;
+}
+
+.nav-btns {
+    display: flex;
+    justify-content: center; /* Centers the buttons horizontally */
+    flex-wrap: wrap;
+    gap: 4px;
+}
 
 /* Style for each menu item link */
 .menu-item {
