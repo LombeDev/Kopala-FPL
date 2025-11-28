@@ -98,9 +98,9 @@ header {
 
 /* New: Style for the dropdown menu */
 .mobile-dropdown-menu {
-    position: left;
+    position: absolute;
     top: 100%; /* Position right below the header */
-    left: 50%;
+    left: 10%;
     transform: translateX(-50%); /* Center the menu */
     width: 40%; 
     max-height: 80vh; /* Prevent menu from being too tall */
