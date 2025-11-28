@@ -73,7 +73,20 @@ function bindMobileMenuListeners() {
         }
     });
 }
+// Function to handle the phone call
+function initiateSubscriptionCall() {
+    // ⚠️ REPLACE THIS WITH THE ACTUAL PHONE NUMBER
+    const phoneNumber = '+1234567890'; 
+    window.location.href = `tel:${phoneNumber}`;
+}
 
+// Find the subscribe button in the DOM
+const subscribeButton = document.querySelector('.subscribe-button');
+
+// Add the click listener
+if (subscribeButton) {
+    subscribeButton.addEventListener('click', initiateSubscriptionCall);
+}
 
 function loadSheet(idx) {
     currentSheetIndex = idx;
