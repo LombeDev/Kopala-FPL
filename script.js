@@ -2,9 +2,10 @@
 const mySheets = [
     { name: "FPL Standings", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1209971248&single=true&output=csv", menuName: "FPL Standings" },
     { name: "Paid", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=2125414706&single=true&output=csv", menuName: "Paid" },
+    { name: "Fixtures", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1206177471&single=true&output=csv", menuName: "Fixtures" },
     { name: "EPL Table", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=354834265&single=true&output=csv", menuName: "EPL Table" },
     { name: "Prices", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=534532114&single=true&output=csv", menuName: "Prices" }
-    { name: "Prices", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=534532114&single=true&output=csv", menuName: "Prices" }
+   
 ];
 
 // ⚠️ Note: Your mySheets config only has 5 items, but your visual menu has 17.
@@ -14,6 +15,8 @@ const mySheets = [
 
 // DOM
 const grid = document.getElementById('data-grid');
+const navBtns = document.getElementById('nav-btns');
+const sheetTitle = document.getElementById('current-sheet-name');
 
 // New DOM elements from the updated HTML
 const mobileDropdownMenu = document.getElementById('mobile-dropdown-menu');
