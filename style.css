@@ -197,7 +197,7 @@ header {
 }
 
 .subscribe-button i {
-    color: white;
+    color: none;
 }
 
 /* New: Style for the dropdown menu */
