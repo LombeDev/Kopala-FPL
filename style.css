@@ -1,10 +1,15 @@
 :root {
-    --fpl-purple: #37003C;
-    --fpl-green: #00FF87;
-    --fpl-pink: #D2005F;
-    --fpl-grey: #EBEBEB;
-    --text-dark: #242424;
+    --fpl-purple: #333333;  /* CHANGE: Neutral Dark Grey for Header BG */
+    --fpl-green: #00FF87;   /* Vibrant Green (kept for table headers) */
+    --fpl-pink: #D2005F;    /* Pink (kept for Subscribe button) */
+    --fpl-grey: #EBEBEB;    /* Background color */
+    --text-dark: #242424;   /* Default text color */
+
+    /* NEW NEUTRAL COLOR SUBSTITUTES */
+    --neutral-highlight: #FFFFFF; /* White for highlight text/accents */
+    --neutral-border: #444444;    /* Slightly lighter dark grey for borders */
 }
+
 
 body {
     font-family: 'Arial', sans-serif;
@@ -14,22 +19,55 @@ body {
     color: var(--text-dark);
 }
 
+/* HEADER & MOBILE MENU STYLES */
+header {
+    /* Uses the new dark grey: --fpl-purple */
+    background-color: var(--fpl-purple); 
+    color: white; /* Text remains white */
+    padding: 0;
+    text-align: center;
+    /* Uses the new dark grey border color: --neutral-border */
+    border-bottom: 4px solid var(--neutral-border); 
+    position: relative;
+}
+
+/* Update Menu Button (If it was previously using purple) */
+.menu-button {
+    background-color: transparent;
+    border: none;
+    color: white; 
+    /* ... (rest of menu-button styles) ... */
+}
+
+/* Custom Text Colors in mobile dropdown */
+.green-text {
+    /* Neutralized to dark grey/black for mobile dropdown links */
+    color: var(--text-dark);
+    font-weight: bold;
+}
+
 /* -------------------------------------- */
-/* HEADER & MOBILE MENU STYLES (UPDATED) */
+/* ORIGINAL STYLES (Keep them) */
 /* -------------------------------------- */
 
-/* HEADER: Modified to contain the top-bar and dropdown */
-header {
-    background-color: var(--fpl-purple);
-    color: white;
-    padding: 0; /* Important: Padding is moved to top-bar */
-    text-align: center;
-    border-bottom: 4px solid var(--fpl-green);
-    position: relative;
-    /* h1 is removed from HTML, so these styles are no longer necessary:
-    header h1 { margin: 0; font-weight: 800; letter-spacing: -1px; }
-    */
+/* DESKTOP NAV BUTTONS (from previous consolidation step) */
+@media (min-width: 768px) {
+    /* ... (menu-button and nav-btns display settings) ... */
+    
+    .nav-btn {
+        color: white; 
+        background-color: transparent;
+        /* ... (rest of nav-btn styles) ... */
+    }
+
+    .nav-btn:hover,
+    .nav-btn.active {
+        /* Subtle white overlay on hover */
+        background-color: rgba(255, 255, 255, 0.2); 
+        color: var(--neutral-highlight); /* White text on hover/active */
+    }
 }
+
 
 /* New: Style the container for Menu and Subscribe buttons */
 .top-bar {
