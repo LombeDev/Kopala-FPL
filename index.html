@@ -3,75 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kopala FPL</title>
+    <title>Kopala FPL - Data Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- 1. CORE VARIABLES & RESET --- */
+        :root {
+            --fpl-purple: #37003C;
+            --fpl-green: #00FF87;
+            --fpl-pink: #D2005F; /* Used sparingly for highlights/accents */
+            --fpl-grey-light: #F8F8F8; /* Light background for a clean look */
+            --fpl-grey-med: #EBEBEB;
+            --text-dark: #242424;
+            --font-family-primary: 'Inter', 'Arial', sans-serif;
+        }
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    </head>
+        body {
+            font-family: var(--font-family-primary);
+            background-color: var(--fpl-grey-light);
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
 
-<body>
+        /* --- 2. HEADER AND TITLE --- */
+        header {
+            background-color: var(--fpl-purple);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--fpl-green);
+        }
 
-    <header>
-        <div class="top-bar">
-            <button class="menu-button" onclick="toggleMenu()">
-            <i class="fas fa-bars menu-toggle-icon" id="menu-toggle-icon"></i>
-        </button>
-            <a href="tel:+260978263899" class="subscribe-button">
-            <i class=""></i> Signup
-        </a>
-    </div>
-        </div>
+        header h1 {
+            margin: 0;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            font-size: 2.5em; /* Larger title */
+        }
 
-        <nav class="mobile-dropdown-menu" id="mobile-dropdown-menu">
-            <a href="#" class="menu-item">
-                <span class="icon-toptransfers">📈</span> Live rank
-            </a>
-            <a href="#" class="menu-item">
-                <span class="icon-fixtures">📅</span> Members area
-            </a>
-            <a href="#" class="menu-item">
-                <span class="icon-fixtureticker">🗓️</span> Fixtures
-            </a>
-            <a href="#" class="menu-item">
-                <span class="icon-statistics">📊</span> Epl table
-            </a>
-            <a href="#" class="menu-item">
-            <span class="icon-prices"></span> <span class="red-text">▼</span> Prices
-            </a>
-            <a href="#" class="menu-item">
-                <span class="icon-trophy">🏆</span> Bonus Points
-            </a>
-            <a href="#" class="menu-item">
-                <span class="icon-articles">📰</span> Articles
-            </a>
+        /* --- 3. NAVIGATION STYLING (Desktop/Tablet) --- */
+        .nav-container {
+            background-color: #fff;
+            padding: 10px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Softer, deeper shadow */
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--fpl-grey-med);
+        }
+
+        .nav-btns {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px; /* More space between buttons */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-btn {
+            background-color: transparent;
+            border: 2px solid var(--fpl-purple); /* Thicker border */
+            color: var(--fpl-purple);
+            padding: 8px 16px; /* Increased padding */
+            border-radius: 20px; /* More rounded pill shape */
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            text-transform: uppercase; /* Professional touch */
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(55, 0, 60, 0.05); /* Subtle hover effect */
+        }
+
+        .nav-btn.active {
+            background-color: var(--fpl-purple);
+            color: var(--fpl-green);
+            border-color: var(--fpl-purple);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Highlight active state */
+        }
+
+        /* --- 4. MAIN CONTENT LAYOUT --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto; /* Increased top margin */
+            padding: 0 20px;
+        }
+
+        #current-sheet-name {
+            color: var(--fpl-purple);
+            font-size: 2em;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-transform: capitalize;
+            border-left: 5px solid var(--fpl-green);
+            padding-left: 10px;
+            line-height: 1;
+        }
+
+        /* --- 5. PROFESSIONAL TABLE STYLING --- */
+        .fpl-table {
+            width: 100%;
+            border-collapse: separate; /* Use separate for rounded corners to work */
+            border-spacing: 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Clearer shadow */
+            font-size: 1em;
+        }
+
+        .fpl-table th, .fpl-table td {
+            padding: 14px 15px; /* More padding */
+            text-align: left;
+        }
+
+        .fpl-table th {
+            background-color: var(--fpl-purple);
+            color: white; /* Changed header text to white for better contrast */
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 0.5px;
+        }
+
+        .fpl-table tr:nth-child(even) {
+            background-color: var(--fpl-grey-light); /* Subtle zebra striping */
+        }
+
+        .fpl-table tr:hover {
+            background-color: rgba(0, 255, 135, 0.1); /* FPL-green hover row highlight */
+        }
+
+        .fpl-table td {
+            border-bottom: 1px solid #eee;
+            color: #333;
+        }
+
+        .fpl-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: var(--fpl-purple);
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        /* --- 6. MOBILE NAVIGATION (Sticky Bottom) --- */
+        @media (max-width: 768px) { /* Changed breakpoint slightly */
+            .nav-container {
+                display: none;
+            }
             
-            <a href="#" class="menu-item">
-                <span class="icon-top10k">👑</span> Top 10K
-            </a>
-            <a href="#" class="menu-item">
-                <span class="icon-captaincy">C</span> Captaincy
-            </a>
-        </nav>
+            .container {
+                padding: 0 10px;
+                margin-top: 20px;
+                margin-bottom: 70px; /* Space for the fixed bottom nav */
+            }
+
+            .mobile-bottom-nav {
+                display: flex;
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 999;
+                background: var(--fpl-purple); /* FPL Purple background */
+                box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.2);
+                padding: 4px 0;
+                justify-content: space-around;
+                overflow-x: auto;
+            }
+
+            .mobile-bottom-nav .nav-btn {
+                flex: 1 1 auto;
+                margin: 0 2px;
+                font-size: 0.85em;
+                padding: 8px 4px;
+                border-radius: 4px;
+                /* Reset colors for the dark background */
+                color: var(--fpl-green); 
+                border-color: var(--fpl-green);
+                background-color: transparent;
+            }
+
+            .mobile-bottom-nav .nav-btn.active {
+                background-color: var(--fpl-green);
+                color: var(--fpl-purple);
+                border-color: var(--fpl-green);
+                box-shadow: none;
+            }
+
+            /* Improve table on small screens */
+            #data-grid {
+                overflow-x: auto;
+                width: 100%;
+            }
+            .fpl-table {
+                min-width: 700px; /* Ensures the table is scrollable */
+                font-size: 0.9em;
+            }
+            .fpl-table th, .fpl-table td {
+                padding: 8px 8px;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-bottom-nav {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>KOPALA FPL</h1>
     </header>
 
     <div class="nav-container" id="nav-menu">
         <div class="nav-btns" id="nav-btns"></div>
     </div>
 
+    <div class="mobile-bottom-nav" id="mobile-bottom-nav"></div>
+    
     <div class="container">
-        <h2 id="current-sheet-name" class="sheet-title">Loading...</h2>
+        <h2 id="current-sheet-name">Loading...</h2>
         <div id="data-grid"></div>
     </div>
 
     <script>
-        // Simple function to toggle the menu visibility
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-dropdown-menu');
-            // Toggle the display property (Flex for visibility, none for hidden)
-            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-        }
-    </script>
-    <script src="script.js"></script>
+        // --- 1. CONFIGURATION AREA ---
+        // Your existing configuration is perfect!
+        const mySheets = [
+            { name: "Live Rank", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1209971248&single=true&output=csv" },
+            { name: "Members", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=2125414706&single=true&output=csv" },
+            { name: "Fixture Ticker", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1206177471&single=true&output=csv" },
+            { name: "Articles", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1939677819&single=true&output=csv" },
+            { name: "Price Change", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=534532114&single=true&output=csv" }
+        ];
 
+        const grid = document.getElementById('data-grid');
+        const navBtns = document.getElementById('nav-btns');
+        const sheetTitle = document.getElementById('current-sheet-name');
+        const mobileBottomNav = document.getElementById('mobile-bottom-nav');
+        let currentSheetIndex = 0;
+
+        // --- 2. JAVASCRIPT LOGIC (Unchanged, as it works well) ---
+
+        function renderNavButtons(container) {
+            container.innerHTML = '';
+            mySheets.forEach((sheet, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'nav-btn' + (idx === currentSheetIndex ? ' active' : '');
+                btn.innerText = sheet.name;
+                btn.onclick = () => loadSheet(idx);
+                container.appendChild(btn);
+            });
+        }
+
+        function loadSheet(idx) {
+            currentSheetIndex = idx;
+            renderNavButtons(navBtns);
+            renderNavButtons(mobileBottomNav);
+
+            sheetTitle.innerText = mySheets[idx].name;
+            grid.innerHTML = '<div class="loading">Loading Data...</div>';
+
+            fetch(mySheets[idx].url)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.text();
+                })
+                .then(data => {
+                    const rows = data.split('\n').map(r => r.trim()).filter(r => r.length > 0);
+                    if (rows.length === 0) {
+                        grid.innerHTML = '<div class="loading">No data found in the spreadsheet.</div>';
+                        return;
+                    }
+
+                    const headers = rows[0].split(',').map(h => h.trim().replace(/"/g, '')); // Basic clean-up for header quotes
+                    grid.innerHTML = '';
+                    const table = document.createElement('table');
+                    table.className = 'fpl-table';
+                    table.innerHTML = `
+                        <thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+                        <tbody>
+                            ${rows.slice(1).map(row => {
+                                // Simple CSV split, consider a more robust library for complex CSV with commas in data
+                                const cols = row.split(',').map(c => c.trim().replace(/"/g, '')); 
+                                return `<tr>${cols.map((val,j) => `<td data-label="${headers[j]}">${val||'-'}</td>`).join('')}</tr>`;
+                            }).join('')}
+                        </tbody>
+                    `;
+                    grid.appendChild(table);
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    grid.innerHTML = '<div class="loading">Error loading data. Please check the sheet links and browser console.</div>';
+                });
+        }
+
+        function initMenu() {
+            renderNavButtons(navBtns);
+            renderNavButtons(mobileBottomNav);
+            if(mySheets.length) loadSheet(0);
+        }
+
+        initMenu();
+    </script>
 </body>
 </html>
