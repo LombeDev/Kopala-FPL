@@ -16,11 +16,11 @@
             <button class="menu-button" onclick="toggleMenu()">
             <i class="fas fa-bars menu-toggle-icon" id="menu-toggle-icon"></i>
         </button>
+            <h1 class="site-logo">Kopala FPL</h1> 
             <a href="tel:+260978263899" class="subscribe-button">
             <i class="fas fa-heart"></i> Subscribe
         </a>
     </div>
-        </div>
 
         <nav class="mobile-dropdown-menu" id="mobile-dropdown-menu">
             <a href="#" class="menu-item">
@@ -54,6 +54,41 @@
         </nav>
     </header>
 
+    <main class="landing-page">
+
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2>Dominate Your FPL Mini-League! 🏆</h2>
+                <p>Get exclusive, data-driven insights, expert picks, and real-time rank updates to climb the global leaderboard.</p>
+                <a href="#features" class="cta-button">See Our Latest Tools</a>
+            </div>
+            </section>
+
+        <section id="features" class="feature-callouts">
+            <div class="feature-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Real-Time Rank</h3>
+                <p>Track your Live Rank instantly to see where you stand during the Gameweek.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-bullseye"></i>
+                <h3>Captaincy Picks</h3>
+                <p>Analyze the best captaincy options based on form, fixtures, and ownership data.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-newspaper"></i>
+                <h3>Expert Articles</h3>
+                <p>Read in-depth analysis and strategy guides from our FPL veterans.</p>
+            </div>
+        </section>
+
+        <section class="secondary-cta">
+            <h3>Unlock All Premium Content</h3>
+            <p>Join the Members Area for top-tier data, exclusive tables, and advanced tools.</p>
+            <a href="tel:+260978263899" class="cta-button primary-cta">Subscribe Now</a>
+        </section>
+
+    </main>
     <div class="nav-container" id="nav-menu">
         <div class="nav-btns" id="nav-btns"></div>
     </div>
@@ -68,7 +103,13 @@
         function toggleMenu() {
             const menu = document.getElementById('mobile-dropdown-menu');
             // Toggle the display property (Flex for visibility, none for hidden)
+            // Use 'block' or 'grid' or 'flex' depending on your CSS, I'll use 'flex' as you had it
             menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+
+            // Optional: Toggle icon class
+            const icon = document.getElementById('menu-toggle-icon');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times'); // Use an X icon when open
         }
     </script>
     <script src="script.js"></script>
