@@ -169,20 +169,60 @@ header {
     display: none;
 }
 
-/* -------------------------------------- */
-/* ORIGINAL STYLES (Keep them) */
-/* -------------------------------------- */
-
-/* DESKTOP NAV */
-.nav-container {
-    background-color: #fff;
-    padding: 12px 0 12px 0;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+/* HIDE DESKTOP BUTTONS BY DEFAULT */
+.nav-btns {
+    /* Existing flex and centering styles remain, 
+       but we hide the whole group on small screens */
+    display: none; 
 }
+
+/* Ensure the top-bar is always visible */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+}
+
+
+
+
+@media (min-width: 768px) {
+    /* Hide the mobile menu trigger button */
+    .menu-button {
+        display: none;
+    }
+    
+    /* Show the main nav links (which are now inside the header) */
+    .nav-btns {
+        /* Use flex to show the buttons horizontally */
+        display: flex; 
+        
+        /* Desktop nav appearance: move it into the purple bar */
+        justify-content: flex-start; /* Align buttons left or center as desired */
+        padding: 0 10px 8px 10px; /* Padding inside the purple header, below the top-bar */
+        gap: 8px; /* Increase gap for desktop */
+    }
+
+    /* Adjust the styling of the individual buttons for the purple background */
+    .nav-btn {
+        color: white; /* Text color is white */
+        background-color: transparent;
+        border-radius: 5px;
+        padding: 8px 12px;
+        font-size: 0.9em; /* Make text slightly bigger */
+    }
+
+    /* Update hover/active state to use green text */
+    .nav-btn:hover,
+    .nav-btn.active {
+        background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+        color: var(--fpl-green); /* Green text on hover/active */
+    }
+}
+
+
+
 
 .nav-btns {
     display: flex;
