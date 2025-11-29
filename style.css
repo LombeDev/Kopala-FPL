@@ -98,10 +98,37 @@ header {
 /* New: Style the container for Menu and Subscribe buttons */
 .top-bar {
     display: flex;
-    justify-content: space-between;
+    /* CHANGE: Space-between is for mobile, ensures menu/logo/button are on the edges */
+    justify-content: space-between; 
     align-items: center;
     padding: 8px 10px; 
 }
+
+/* HIDE DESKTOP BUTTONS BY DEFAULT */
+.nav-btns {
+    /* Hides the desktop links on mobile */
+    display: none; 
+}
+
+/* Update Subscribe Button to match "Signup" style (This is crucial) */
+.subscribe-button {
+    /* This button is now your "Signup" button, assuming your HTML is updated */
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: var(--fpl-pink); /* #D2005F (the red/pink color) */
+    border: none;
+    color: white;
+    padding: 8px 15px; /* Increase padding for a button look */
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+/* Update the Menu button to be on the opposite side of the subscribe button */
+/* NOTE: You may need a Logo/Title placeholder on the left for proper spacing on mobile */
 
 /* Update Menu Button (text/icon color must be dark) */
 .menu-button {
@@ -300,6 +327,56 @@ header {
     .menu-button {
         display: none;
     }
+    
+    /* CHANGE 1: Make .top-bar contain ALL header elements (Logo, Links, Button) */
+    .top-bar {
+        display: flex;
+        justify-content: flex-start; /* Start elements from the left */
+        align-items: center;
+        padding: 12px 20px; /* Adjust desktop padding */
+    }
+    
+    /* CHANGE 2: Show and position the nav links */
+    .nav-btns {
+        /* Display the links horizontally */
+        display: flex;
+        
+        /* Pushes the links to the right, creating space between the logo/left-element and links/button */
+        margin-left: auto; 
+        
+        /* Reset padding from previous step */
+        padding: 0; 
+        gap: 20px; /* Increase gap between links */
+        
+        /* Ensure links are vertically centered */
+        align-items: center;
+    }
+
+    /* CHANGE 3: Ensure the individual link styling works on the light background */
+    .nav-btn {
+        color: var(--fpl-nav-text); /* Dark text on light background */
+        background-color: transparent;
+        border-radius: 5px;
+        padding: 5px 10px; /* Adjust padding to match surrounding text */
+        font-size: 1em; /* Make text readable */
+        font-weight: 500;
+    }
+
+    /* CHANGE 4: Update hover/active state to match the FPL Purple/Pink style from the image */
+    .nav-btn:hover,
+    .nav-btn.active {
+        /* The "Paid" button in the image uses a dark background/light text */
+        background-color: var(--fpl-purple); /* Dark Purple BG for active/hover */
+        color: white; /* White text on active/hover */
+        border-radius: 5px;
+    }
+    
+    /* Move the subscribe button (Signup) to the end of the nav links */
+    .subscribe-button {
+        margin-left: 20px; /* Add space between last nav link and button */
+        /* Ensure the button is styled consistently */
+    }
+}
     
     /* Show the main nav links (which are now inside the header) */
     .nav-btns {
