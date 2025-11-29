@@ -1,13 +1,17 @@
 :root {
-    --fpl-purple: #333333;  /* CHANGE: Neutral Dark Grey for Header BG */
-    --fpl-green: #00FF87;   /* Vibrant Green (kept for table headers) */
-    --fpl-pink: #D2005F;    /* Pink (kept for Subscribe button) */
+    /* CHANGE: This will now be the Nav/Header background color (Near White) */
+    --fpl-nav-bg: #FFFFFF;  
+    
+    /* CHANGE: This will be the main text color on the white background */
+    --fpl-nav-text: #242424; 
+    
+    /* CHANGE: Subtly light grey border/separator color */
+    --fpl-nav-border: #EEEEEE; 
+
+    --fpl-green: #00FF87;   /* Kept for table headers */
+    --fpl-pink: #D2005F;    /* Kept for Subscribe button */
     --fpl-grey: #EBEBEB;    /* Background color */
     --text-dark: #242424;   /* Default text color */
-
-    /* NEW NEUTRAL COLOR SUBSTITUTES */
-    --neutral-highlight: #FFFFFF; /* White for highlight text/accents */
-    --neutral-border: #444444;    /* Slightly lighter dark grey for borders */
 }
 
 
@@ -19,17 +23,7 @@ body {
     color: var(--text-dark);
 }
 
-/* HEADER & MOBILE MENU STYLES */
-header {
-    /* Uses the new dark grey: --fpl-purple */
-    background-color: var(--fpl-purple); 
-    color: white; /* Text remains white */
-    padding: 0;
-    text-align: center;
-    /* Uses the new dark grey border color: --neutral-border */
-    border-bottom: 4px solid var(--neutral-border); 
-    position: relative;
-}
+
 
 /* Update Menu Button (If it was previously using purple) */
 .menu-button {
@@ -46,19 +40,53 @@ header {
     font-weight: bold;
 }
 
-/* -------------------------------------- */
-/* ORIGINAL STYLES (Keep them) */
-/* -------------------------------------- */
+/* HEADER & MOBILE MENU STYLES */
+header {
+    /* CHANGE: White background */
+    background-color: var(--fpl-nav-bg); 
+    /* CHANGE: Dark text color for text on the white background */
+    color: var(--fpl-nav-text); 
+    padding: 0;
+    text-align: center;
+    /* CHANGE: Subtle light border at the bottom */
+    border-bottom: 1px solid var(--fpl-nav-border); 
+    position: relative;
+}
 
-/* DESKTOP NAV BUTTONS (from previous consolidation step) */
-@media (min-width: 768px) {
-    /* ... (menu-button and nav-btns display settings) ... */
-    
-    .nav-btn {
-        color: white; 
-        background-color: transparent;
-        /* ... (rest of nav-btn styles) ... */
-    }
+/* New: Style the container for Menu and Subscribe buttons */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px; 
+}
+
+/* Update Menu Button (text/icon color must be dark) */
+.menu-button {
+    background-color: transparent;
+    border: none;
+    /* CHANGE: Text/Icon color to dark grey */
+    color: var(--fpl-nav-text); 
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1; 
+}
+
+/* Subscribe button remains FPL Pink */
+/* ... (Keep .subscribe-button styles as they use --fpl-pink) ... */
+
+/* Mobile Dropdown Menu (already white, keep styles) */
+/* ... (Keep .mobile-dropdown-menu styles as they use white background) ... */
+
+/* Custom Text Colors in mobile dropdown */
+.green-text {
+    /* Set to primary dark text color */
+    color: var(--text-dark); 
+    font-weight: bold;
+}
 
     .nav-btn:hover,
     .nav-btn.active {
