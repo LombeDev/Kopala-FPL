@@ -1,18 +1,18 @@
 :root {
-    /* CHANGE: Very Light Grey for Nav/Header Background (from existing var) */
+    /* Very Light Grey for Nav/Header Background */
     --fpl-nav-bg: var(--fpl-grey); 
     
-    /* CHANGE: Dark text color for the light background */
+    /* Dark text color for the light background */
     --fpl-nav-text: #242424; 
     
-    /* CHANGE: FPL Pink border/separator color */
+    /* FPL Pink color (kept for the subscribe button) */
     --fpl-nav-border: var(--fpl-pink); 
 
-    --fpl-purple: #37003C;  /* Kept for potential secondary dark elements */
-    --fpl-green: #00FF87;   /* Kept for table headers/accents */
-    --fpl-pink: #D2005F;    /* Primary highlight color (for Subscribe button and border) */
-    --fpl-grey: #EBEBEB;    /* Main background color */
-    --text-dark: #242424;   /* Default text color */
+    --fpl-purple: #37003C; 
+    --fpl-green: #00FF87;   
+    --fpl-pink: #D2005F;    
+    --fpl-grey: #EBEBEB;    
+    --text-dark: #242424;   
 }
 
 body {
@@ -42,18 +42,22 @@ body {
 
 /* HEADER & MOBILE MENU STYLES */
 header {
-    /* CHANGE: Light Grey background */
+    /* Light Grey background */
     background-color: var(--fpl-nav-bg); 
-    /* CHANGE: Dark text color for contrast */
+    /* Dark text color for contrast */
     color: var(--fpl-nav-text); 
     padding: 0;
     text-align: center;
-    /* CHANGE: FPL Pink border at the bottom */
-    border-bottom: 4px solid var(--fpl-nav-border); 
+    
+    /* CHANGE: REMOVE THE PINK BORDER */
+    border-bottom: none; 
+    
     position: relative;
-    /* Add a subtle shadow for definition on the light background */
+    /* Keep the subtle shadow for definition on the light background */
     box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
 }
+
+/* ... (All other mobile and desktop styles remain the same) ... */
 
 /* Update Menu Button (text/icon color must be dark) */
 .menu-button {
