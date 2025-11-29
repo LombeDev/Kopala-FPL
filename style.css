@@ -1,17 +1,17 @@
 :root {
-    /* CHANGE: Light Blue for Nav/Header Background */
-    --fpl-nav-bg: #E3F2FD;  /* Very light pale blue */
+    /* CHANGE: Very Light Grey for Nav/Header Background (from existing var) */
+    --fpl-nav-bg: var(--fpl-grey); 
     
     /* CHANGE: Dark text color for the light background */
     --fpl-nav-text: #242424; 
     
-    /* CHANGE: Subtle, slightly darker blue border/separator color */
-    --fpl-nav-border: #BBDEFB; /* Slightly darker pale blue */
+    /* CHANGE: FPL Pink border/separator color */
+    --fpl-nav-border: var(--fpl-pink); 
 
     --fpl-purple: #37003C;  /* Kept for potential secondary dark elements */
     --fpl-green: #00FF87;   /* Kept for table headers/accents */
-    --fpl-pink: #D2005F;    /* Kept for Subscribe button */
-    --fpl-grey: #EBEBEB;    /* Background color */
+    --fpl-pink: #D2005F;    /* Primary highlight color (for Subscribe button and border) */
+    --fpl-grey: #EBEBEB;    /* Main background color */
     --text-dark: #242424;   /* Default text color */
 }
 
@@ -42,17 +42,37 @@ body {
 
 /* HEADER & MOBILE MENU STYLES */
 header {
-    /* CHANGE: Light Blue background */
+    /* CHANGE: Light Grey background */
     background-color: var(--fpl-nav-bg); 
     /* CHANGE: Dark text color for contrast */
     color: var(--fpl-nav-text); 
     padding: 0;
     text-align: center;
-    /* CHANGE: Subtle light blue border at the bottom */
-    border-bottom: 1px solid var(--fpl-nav-border); 
+    /* CHANGE: FPL Pink border at the bottom */
+    border-bottom: 4px solid var(--fpl-nav-border); 
     position: relative;
+    /* Add a subtle shadow for definition on the light background */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
 }
 
+/* Update Menu Button (text/icon color must be dark) */
+.menu-button {
+    background-color: transparent;
+    border: none;
+    /* CHANGE: Text/Icon color to dark grey */
+    color: var(--fpl-nav-text); 
+    /* ... (rest of menu-button styles) ... */
+}
+
+/* Subscribe button remains FPL Pink */
+/* ... (Keep .subscribe-button styles as they use --fpl-pink) ... */
+
+/* Custom Text Colors in mobile dropdown */
+.green-text {
+    /* Set to primary dark text color */
+    color: var(--text-dark); 
+    font-weight: bold;
+}
 /* Update Menu Button (text/icon color must be dark) */
 .menu-button {
     background-color: transparent;
