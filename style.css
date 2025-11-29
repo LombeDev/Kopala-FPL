@@ -167,7 +167,7 @@ header {
     align-items: center;
     background-color: transparent;
     border: none; 
-    color: white; /* Icon color */
+    color: black; /* Icon color */
     padding: 10px; /* Adjust padding to set the size */
     border-radius: 5px;
     font-size: 1.2em; /* Size of the icon */
