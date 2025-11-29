@@ -1,19 +1,19 @@
 :root {
-    /* CHANGE: This will now be the Nav/Header background color (Near White) */
-    --fpl-nav-bg: #FFFFFF;  
+    /* CHANGE: Light Blue for Nav/Header Background */
+    --fpl-nav-bg: #E3F2FD;  /* Very light pale blue */
     
-    /* CHANGE: This will be the main text color on the white background */
+    /* CHANGE: Dark text color for the light background */
     --fpl-nav-text: #242424; 
     
-    /* CHANGE: Subtly light grey border/separator color */
-    --fpl-nav-border: #EEEEEE; 
+    /* CHANGE: Subtle, slightly darker blue border/separator color */
+    --fpl-nav-border: #BBDEFB; /* Slightly darker pale blue */
 
-    --fpl-green: #00FF87;   /* Kept for table headers */
+    --fpl-purple: #37003C;  /* Kept for potential secondary dark elements */
+    --fpl-green: #00FF87;   /* Kept for table headers/accents */
     --fpl-pink: #D2005F;    /* Kept for Subscribe button */
     --fpl-grey: #EBEBEB;    /* Background color */
     --text-dark: #242424;   /* Default text color */
 }
-
 
 body {
     font-family: 'Arial', sans-serif;
@@ -42,17 +42,35 @@ body {
 
 /* HEADER & MOBILE MENU STYLES */
 header {
-    /* CHANGE: White background */
+    /* CHANGE: Light Blue background */
     background-color: var(--fpl-nav-bg); 
-    /* CHANGE: Dark text color for text on the white background */
+    /* CHANGE: Dark text color for contrast */
     color: var(--fpl-nav-text); 
     padding: 0;
     text-align: center;
-    /* CHANGE: Subtle light border at the bottom */
+    /* CHANGE: Subtle light blue border at the bottom */
     border-bottom: 1px solid var(--fpl-nav-border); 
     position: relative;
 }
 
+/* Update Menu Button (text/icon color must be dark) */
+.menu-button {
+    background-color: transparent;
+    border: none;
+    /* CHANGE: Text/Icon color to dark grey */
+    color: var(--fpl-nav-text); 
+    /* ... (rest of menu-button styles) ... */
+}
+
+/* Subscribe button remains FPL Pink */
+/* ... (Keep .subscribe-button styles) ... */
+
+/* Custom Text Colors in mobile dropdown */
+.green-text {
+    /* Set to primary dark text color */
+    color: var(--text-dark); 
+    font-weight: bold;
+}
 /* New: Style the container for Menu and Subscribe buttons */
 .top-bar {
     display: flex;
