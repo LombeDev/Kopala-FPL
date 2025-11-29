@@ -1,6 +1,5 @@
 // --- 1. SHEETS CONFIG ---
 const mySheets = [
-    { name: "Home", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=189372745&single=true&output=csv", menuName: "Home" },
     { name: "FPL Standings", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=1209971248&single=true&output=csv", menuName: "FPL Standings" },
     { name: "Paid", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=2125414706&single=true&output=csv", menuName: "Paid" },
     { name: "EPL Table", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLnwzzchPmS_XsOfbDhpmthovFZ8ZA-Q5n924xmqLCHU8SikjO57XNl_iVqxgHq402-fcXGomwNOAz/pub?gid=354834265&single=true&output=csv", menuName: "EPL Table" },
@@ -15,8 +14,6 @@ const mySheets = [
 
 // DOM
 const grid = document.getElementById('data-grid');
-const navBtns = document.getElementById('nav-btns');
-const sheetTitle = document.getElementById('current-sheet-name');
 
 // New DOM elements from the updated HTML
 const mobileDropdownMenu = document.getElementById('mobile-dropdown-menu');
