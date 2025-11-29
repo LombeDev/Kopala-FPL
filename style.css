@@ -73,6 +73,7 @@ header {
     color: var(--text-dark); 
     font-weight: bold;
 }
+
 /* Update Menu Button (text/icon color must be dark) */
 .menu-button {
     background-color: transparent;
@@ -80,6 +81,9 @@ header {
     /* CHANGE: Text/Icon color to dark grey */
     color: var(--fpl-nav-text); 
     /* ... (rest of menu-button styles) ... */
+}
+.subscribe-button i {
+    text-decoration: none !important;
 }
 
 /* Subscribe button remains FPL Pink */
